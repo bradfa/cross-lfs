@@ -61,24 +61,37 @@ ARCHS_VD_XML := $(ARCHS:%=%-validate_dump-xml)
 .PHONY: $(ARCHS_VD_XML)
 $(ARCHS_VD_XML): override arch = $(@:%-validate_dump-xml=%)
 $(ARCHS_VD_XML):
-	@echo "Validating $(arch) book..."
+	@echo "Validating $(arch) against the CLFS Schema..."
 	$(Q)mkdir -p $(VALIDATEDIR)
 	$(Q)xmllint --nonet --noent --xinclude \
-	  --relaxng $(TOP)/schema/docbook/4.5/rng/docbook.rng \
+	  --relaxng $(TOP)/schema/clfs/0.1/rng/clfs.rng \
 	  -o $(VALIDATEDIR)/$(arch)-full.xml \
-	  $(PWD)/$(arch)-index.xml
+	  $(PWD)/$(arch)-index.xml \
+	  2>&1 | grep -v " validates$$"; \
+	  if test $${?} -ne 0; then true; else false; fi
 
 ARCHS_P_XML := $(ARCHS:%=%-profiled-xml)
 .PHONY: $(ARCHS_P_XML)
 $(ARCHS_P_XML): override arch = $(@:%-profiled-xml=%)
 $(ARCHS_P_XML):
 	@$(MAKE) --no-print-directory $(arch)-validate_dump-xml
-	@echo "Generating profiled $(arch) book..."
+	@echo "Profiling $(arch) for rendering..."
 	$(Q)mkdir -p $(PROFILEDIR)
 	$(Q)xsltproc --nonet --stringparam profile.condition html \
 	  --output $(PROFILEDIR)/$(arch)-html.xml \
 	  $(PWD)/stylesheets/lfs-xsl/profile.xsl \
 	  $(VALIDATEDIR)/$(arch)-full.xml
+
+ARCHS_VDB_XML := $(ARCHS:%=%-validate_db-xml)
+.PHONY: $(ARCHS_VDB_XML)
+$(ARCHS_VDB_XML): override arch = $(@:%-validate_db-xml=%)
+$(ARCHS_VDB_XML):
+	@echo "Validating $(arch) against the DocBook Schema..."
+	$(Q)xmllint --noout --nonet \
+	  --relaxng $(TOP)/schema/docbook/4.5/rng/docbook.rng \
+	  $(VALIDATEDIR)/$(arch)-full.xml \
+	  2>&1 | grep -v " validates$$"; \
+	  if test $${?} -ne 0; then true; else false; fi
 
 ARCHS_HTML := $(ARCHS:%=%-html)
 .PHONY: html render $(ARCHS_HTML)
@@ -86,6 +99,7 @@ html render: $(ARCHS_HTML) titlepage
 $(ARCHS_HTML): override arch = $(@:%-html=%)
 $(ARCHS_HTML):
 	@$(MAKE) --no-print-directory $(arch)-profiled-xml
+	@$(MAKE) --no-print-directory $(arch)-validate_db-xml
 
 	@echo "Rendering chunked XHTML of $(arch)..."
 	$(Q)mkdir -p $(HTMLDIR)/$(arch)
@@ -111,6 +125,7 @@ nochunks: $(ARCHS_NOCHUNKS)
 $(ARCHS_NOCHUNKS): override arch = $(@:%-nochunks=%)
 $(ARCHS_NOCHUNKS):
 	@$(MAKE) --no-print-directory $(arch)-profiled-xml
+	@$(MAKE) --no-print-directory $(arch)-validate_db-xml
 
 	@echo "Rendering Single File HTML of $(arch)..."
 	$(Q)mkdir -p $(NOCHUNKDIR)
@@ -127,6 +142,7 @@ fo: $(ARCHS_FO)
 $(ARCHS_FO): override arch = $(@:%-fo=%)
 $(ARCHS_FO):
 	@$(MAKE) --no-print-directory $(arch)-profiled-xml
+	@$(MAKE) --no-print-directory $(arch)-validate_db-xml
 
 	@echo "Generating FO file of $(arch)..."
 	@mkdir -p $(FODIR)
@@ -152,10 +168,12 @@ ARCHS_VALIDATE := $(ARCHS:%=%-validate)
 validate: $(ARCHS_VALIDATE)
 $(ARCHS_VALIDATE): override arch =  $(@:%-validate=%)
 $(ARCHS_VALIDATE):
-	@echo "Validating $(arch)..."
+	@echo "Validating $(arch) against the CLFS Schema..."
 	$(Q)xmllint --xinclude --noout --nonet \
-	  --relaxng $(TOP)/schema/docbook/4.5/rng/docbook.rng \
-	  $(PWD)/$(arch)-index.xml
+	  --relaxng $(TOP)/schema/clfs/0.1/rng/clfs.rng \
+	  $(PWD)/$(arch)-index.xml \
+	  2>&1 | grep -v " validates$$"; \
+	  if test $${?} -ne 0; then true; else false; fi
 
 ARCHS_TROUBLE := $(ARCHS:%=%-trouble)
 .PHONY: trouble $(ARCHS_TROUBLE)
@@ -165,12 +183,16 @@ $(ARCHS_TROUBLE):
 	@echo "Troubleshooting $(arch)..."
 	@mkdir -p $(TROUBLEDIR)
 	$(Q)xmllint --xinclude --nonet \
-	  --relaxng $(TOP)/schema/docbook/4.5/rng/docbook.rng \
+	  --relaxng $(TOP)/schema/clfs/0.1/rng/clfs.rng \
 	  -o $(TROUBLEDIR)/dump-$(arch) \
-	  $(PWD)/$(arch)-index.xml
+	  $(PWD)/$(arch)-index.xml \
+	  2>&1 | grep -v " validates$$"; \
+	  if test $${?} -ne 0; then true; else false; fi
 	$(Q)xmllint --xinclude --noout --nonet \
-	  --relaxng $(TOP)/schema/docbook/4.5/rng/docbook.rng \
-	  $(TROUBLEDIR)/dump-$(arch)
+	  --relaxng $(TOP)/schema/clfs/0.1/rng/clfs.rng \
+	  $(TROUBLEDIR)/dump-$(arch) \
+	  2>&1 | grep -v " validates$$"; \
+	  if test $${?} -ne 0; then true; else false; fi
 	@echo "You can now look at $(TROUBLEDIR)/dump-$(arch) to see the errors"
 
 ARCHS_DUMP := $(ARCHS:%=%-dump)
