@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE part PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "general.ent">
+  %general-entities;
+]>
+
+  <part id="part0" xmlns:c="http://schema.cross-lfs.org/book">
+    <?dbhtml filename="part0.html"?>
+    <title>Test Part</title>
+
+    <chapter>
+      <?dbhtml dir="chapter0"?>
+      <?dbhtml filename="chapter0.html"?>
+      <title>Chapter 0</title>
+
+      <sect1>
+        <?dbhtml filename="sect0.html"?>
+        <title>Sect 0</title>
+        <para>Testing... 1.. 2.. 3..</para>
+      </sect1>
+
+      <c:package id="blah" c:multibuild="false">
+        <sect1>
+          <title>Blah</title>
+
+          <para>Testing... 1.. 2.. 3..</para>
+
+        </sect1>
+      </c:package>
+
+      <c:package id="blarg" c:multibuild="true">
+        <sect1>
+          <title>Blarg
+            <phrase c:multilib="true">
+              <phrase c:bits="32"> - 32Bit</phrase>
+              <phrase c:bits="n32"> - N32</phrase>
+              <phrase c:bits="64"> - 64Bit</phrase>
+            </phrase>
+          </title>
+
+          <para>Testing... 1.. 2.. 3..</para>
+
+          <para c:bits="32,n32">Only 32,N32</para>
+
+<screen c:bits="32"><userinput>echo 32bit Build</userinput></screen>
+
+          <para c:bits="64">Only 64</para>
+
+<screen c:bits="64"><userinput>echo 64bit Build</userinput></screen>
+
+          <sect2>
+            <title>Hi There</title>
+
+            <para>You should always see me</para>
+
+            <para c:bits="32" c:multilib="true">You will only see me on multilib 32bit</para>
+          </sect2>
+
+        </sect1>
+      </c:package>
+
+    </chapter>
+
+  </part>

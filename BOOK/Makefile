@@ -2,6 +2,7 @@ TOP		:= $(PWD)
 RENDERDIR	:= $(TOP)/../render
 
 VALIDATEDIR	:= $(RENDERDIR)/validate
+DBXMLDIR	:= $(RENDERDIR)/docbook
 PROFILEDIR	:= $(RENDERDIR)/profile
 
 HTMLDIR		:= $(RENDERDIR)/html
@@ -22,6 +23,19 @@ ARCHS		:= x86 x86_64 x86_64-64 \
 		   mips mips64 mips64-64 \
 		   ppc ppc64 \
 		   alpha
+
+x86_ML		:= 32
+x86_64_ML	:= 32,64
+x86_64-64_ML	:= 64
+sparc_ML	:= 32
+sparc64_ML	:= 32,64
+sparc64-64_ML	:= 64
+mips_ML		:= 32
+mips64_ML	:= 32,n32,64
+mips64-64_ML	:= 64
+ppc_ML		:= 32
+ppc64_ML	:= 32,64
+alpha_ML	:= 64
 
 ifdef V
   Q =
@@ -70,17 +84,32 @@ $(ARCHS_VD_XML):
 	  2>&1 | grep -v " validates$$"; \
 	  if test $${?} -ne 0; then true; else false; fi
 
+ARCHS_DB_XML := $(ARCHS:%=%-db-xml)
+.PHONY: $(ARCHS_DB_XML)
+$(ARCHS_DB_XML): override arch = $(@:%-db-xml=%)
+$(ARCHS_DB_XML):
+	@$(MAKE) --no-print-directory $(arch)-validate_dump-xml
+	@echo "Generating DocBook XML for $(arch)..."
+	$(Q)mkdir -p $(DBXMLDIR)
+	$(Q)xsltproc --nonet \
+	  --stringparam clfs.arch "$(arch)" \
+	  --stringparam clfs.multilib "$($(arch)_ML)" \
+	  --output $(DBXMLDIR)/$(arch)-db.xml \
+	  $(PWD)/stylesheets/clfs-profile.xsl \
+	  $(VALIDATEDIR)/$(arch)-full.xml
+
 ARCHS_P_XML := $(ARCHS:%=%-profiled-xml)
 .PHONY: $(ARCHS_P_XML)
 $(ARCHS_P_XML): override arch = $(@:%-profiled-xml=%)
 $(ARCHS_P_XML):
-	@$(MAKE) --no-print-directory $(arch)-validate_dump-xml
+	@$(MAKE) --no-print-directory $(arch)-db-xml
 	@echo "Profiling $(arch) for rendering..."
 	$(Q)mkdir -p $(PROFILEDIR)
-	$(Q)xsltproc --nonet --stringparam profile.condition html \
+	$(Q)xsltproc --nonet \
+	  --stringparam profile.condition html \
 	  --output $(PROFILEDIR)/$(arch)-html.xml \
 	  $(PWD)/stylesheets/lfs-xsl/profile.xsl \
-	  $(VALIDATEDIR)/$(arch)-full.xml
+	  $(DBXMLDIR)/$(arch)-db.xml
 
 ARCHS_VDB_XML := $(ARCHS:%=%-validate_db-xml)
 .PHONY: $(ARCHS_VDB_XML)
@@ -89,7 +118,7 @@ $(ARCHS_VDB_XML):
 	@echo "Validating $(arch) against the DocBook Schema..."
 	$(Q)xmllint --noout --nonet \
 	  --relaxng $(TOP)/schema/docbook/4.5/rng/docbook.rng \
-	  $(VALIDATEDIR)/$(arch)-full.xml \
+	  $(PROFILEDIR)/$(arch)-html.xml \
 	  2>&1 | grep -v " validates$$"; \
 	  if test $${?} -ne 0; then true; else false; fi
 

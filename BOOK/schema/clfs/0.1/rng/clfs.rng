@@ -1,4 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar xmlns="http://relaxng.org/ns/structure/1.0">
-  <include href="../../../docbook/4.5/rng/docbook.rng"/>
+<grammar xmlns:c="http://schema.cross-lfs.org/book" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!-- We are building around the DocBook Schema -->
+  <include href="docbook.rng">
+    <define name="sect1">
+      <choice>
+        <element name="sect1">
+          <ref name="sect1.attlist"/>
+          <optional>
+            <ref name="sect1info"/>
+          </optional>
+          <ref name="sect.title.content"/>
+          <zeroOrMore>
+            <ref name="nav.class"/>
+          </zeroOrMore>
+          <choice>
+            <group>
+              <oneOrMore>
+                <ref name="divcomponent.mix"/>
+              </oneOrMore>
+              <choice>
+                <zeroOrMore>
+                  <ref name="refentry.class"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                  <ref name="sect2"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                  <ref name="simplesect"/>
+                </zeroOrMore>
+              </choice>
+            </group>
+            <oneOrMore>
+              <ref name="refentry.class"/>
+            </oneOrMore>
+            <oneOrMore>
+              <ref name="sect2"/>
+            </oneOrMore>
+            <oneOrMore>
+              <ref name="simplesect"/>
+            </oneOrMore>
+          </choice>
+          <zeroOrMore>
+            <ref name="nav.class"/>
+          </zeroOrMore>
+        </element>
+        <ref name="clfs.sect1.package"/>
+      </choice>
+    </define>
+  </include>
+  <!-- Extend the standard profiling attributes -->
+  <define name="local.effectivity.attrib" combine="interleave">
+    <ref name="clfs.attrib.arch"/>
+    <ref name="clfs.attrib.bits"/>
+    <ref name="clfs.attrib.multilib"/>
+  </define>
+  <!-- Custom attributes unsed in this schema -->
+  <define name="clfs.attrib.arch">
+    <optional>
+      <attribute name="c:arch"/>
+    </optional>
+  </define>
+  <define name="clfs.attrib.bits">
+    <optional>
+      <attribute name="c:bits"/>
+    </optional>
+  </define>
+  <define name="clfs.attrib.multilib">
+    <optional>
+      <attribute name="c:multilib">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="clfs.attrib.multibuild">
+    <attribute name="c:multibuild">
+      <choice>
+        <value>true</value>
+        <value>false</value>
+      </choice>
+    </attribute>
+  </define>
+  <!-- Package element to be used inside of the chapter element -->
+  <define name="clfs.sect1.package">
+    <element name="c:package">
+      <attribute name="id"/>
+      <ref name="clfs.attrib.arch"/>
+      <ref name="clfs.attrib.bits"/>
+      <ref name="clfs.attrib.multilib"/>
+      <ref name="clfs.attrib.multibuild"/>
+      <ref name="sect1"/>
+    </element>
+  </define>
+  <!-- Switch case to be used inside of a sect1 -->
+  <define name="clfs.sect1.switch">
+    <element name="c:switch">
+      <zeroOrMore>
+        <element name="c:case">
+          <ref name="clfs.attrib.arch"/>
+          <ref name="clfs.attrib.bits"/>
+          <ref name="clfs.attrib.multilib"/>
+        </element>
+      </zeroOrMore>
+      <element name="c:default">
+        <empty/>
+      </element>
+    </element>
+  </define>
 </grammar>

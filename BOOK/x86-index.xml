@@ -8,10 +8,12 @@
 <book>
 
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="prologue/x86/bookinfo.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="testpart.xml"/>
   <!--
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="prologue/dedication.xml"/>
   -->
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="prologue/preface.xml"/>
+
 
   <part id="part1">
     <?dbhtml filename="part1.html"?>

@@ -1,3 +1,54 @@
 
-include "../../../docbook/4.5/rng/docbook.rnc"
+namespace c = "http://schema.cross-lfs.org/book"
 
+# We are building around the DocBook Schema
+include "../../../docbook/4.5/rng/docbook.rnc" {
+  sect1 = (
+    element sect1 {
+      sect1.attlist,
+      sect1info?,
+      sect.title.content,
+      nav.class*,
+      ((divcomponent.mix+, (refentry.class* | sect2* | simplesect*))
+       | refentry.class+
+       | sect2+
+         | simplesect+),
+    nav.class*
+    } | clfs.sect1.package )
+}
+
+# Extend the standard profiling attributes
+local.effectivity.attrib &=
+  clfs.attrib.arch,
+  clfs.attrib.bits,
+  clfs.attrib.multilib
+
+# Custom attributes unsed in this schema
+clfs.attrib.arch = attribute c:arch { text }?
+clfs.attrib.bits = attribute c:bits { text }?
+clfs.attrib.multilib = attribute c:multilib { "true" | "false" }?
+clfs.attrib.multibuild = attribute c:multibuild { "true" | "false" }
+
+# Package element to be used inside of the chapter element
+clfs.sect1.package = 
+  element c:package {
+    attribute id { text },
+    clfs.attrib.arch,
+    clfs.attrib.bits,
+    clfs.attrib.multilib,
+    clfs.attrib.multibuild,
+    sect1
+  }
+
+# Switch case to be used inside of a sect1
+clfs.sect1.switch = 
+  element c:switch {
+    element c:case {
+      clfs.attrib.arch,
+      clfs.attrib.bits,
+      clfs.attrib.multilib
+    }*,
+    element c:default {
+      empty
+    }
+  }
