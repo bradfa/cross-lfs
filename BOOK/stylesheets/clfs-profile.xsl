@@ -36,40 +36,34 @@
     <xsl:param name="id" /> <!-- Base ID of the resulting package -->
     <xsl:param name="multibuild" /> <!-- Do we need to install for each bitsize? -->
     <xsl:param name="bits" /> <!-- Which bit sizes to create a package for -->
-    <xsl:choose>
-      <xsl:when test="$multibuild = 'true'">
-        <xsl:variable name="currentbits" select="substring-before(concat($bits, ','), ',')" />
-        <xsl:variable name="remainingbits" select="substring-after($bits, ',')" />
-        <xsl:call-template name="package-stub">
-          <xsl:with-param name="id" select="$id" />
-          <xsl:with-param name="idsuffix">
-            <xsl:if test="$remainingbits">
-              <xsl:value-of select="concat('-', $currentbits)" />
-            </xsl:if>
-          </xsl:with-param>
-          <xsl:with-param name="bits" select="substring-before(concat($bits, ','), ',')" />
-          <xsl:with-param name="multi"><xsl:text>multi</xsl:text></xsl:with-param>
-        </xsl:call-template>
-        <xsl:if test="$remainingbits">
-          <xsl:text>
 
-          </xsl:text>
-          <xsl:call-template name="package-iterator">
-            <xsl:with-param name="id" select="$id" />
-            <xsl:with-param name="multibuild" select="$multibuild" />
-            <xsl:with-param name="bits" select="$remainingbits" />
-          </xsl:call-template>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="package-stub">
-          <xsl:with-param name="id" select="$id" />
-          <xsl:with-param name="idsuffix" />
-          <xsl:with-param name="bits" select="substring-before(concat($bits, ','), ',')" />
-          <xsl:with-param name="multi"><xsl:text>single</xsl:text></xsl:with-param>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:variable name="currentbits" select="substring-before(concat($bits, ','), ',')" />
+    <xsl:variable name="remainingbits" select="substring-after($bits, ',')" />
+
+    <xsl:if test="not(boolean($remainingbits) and $multibuild = 'false')">
+      <xsl:call-template name="package-stub">
+        <xsl:with-param name="id" select="$id" />
+        <xsl:with-param name="idsuffix">
+          <xsl:if test="$remainingbits">
+            <xsl:value-of select="concat('-', $currentbits)" />
+          </xsl:if>
+        </xsl:with-param>
+        <xsl:with-param name="bits" select="substring-before(concat($bits, ','), ',')" />
+        <xsl:with-param name="multi"><xsl:text>multi</xsl:text></xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+
+    <xsl:if test="$remainingbits">
+      <xsl:text>
+
+      </xsl:text>
+      <xsl:call-template name="package-iterator">
+        <xsl:with-param name="id" select="$id" />
+        <xsl:with-param name="multibuild" select="$multibuild" />
+        <xsl:with-param name="bits" select="$remainingbits" />
+      </xsl:call-template>
+    </xsl:if>
+
   </xsl:template>
 
   <xsl:template name="package-stub">
