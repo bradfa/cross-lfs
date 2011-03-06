@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:c="http://schema.cross-lfs.org/book"
   version="1.0">
 
@@ -49,6 +48,7 @@
             </xsl:if>
           </xsl:with-param>
           <xsl:with-param name="bits" select="substring-before(concat($bits, ','), ',')" />
+          <xsl:with-param name="multi"><xsl:text>multi</xsl:text></xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$remainingbits">
           <xsl:text>
@@ -66,6 +66,7 @@
           <xsl:with-param name="id" select="$id" />
           <xsl:with-param name="idsuffix" />
           <xsl:with-param name="bits" select="substring-before(concat($bits, ','), ',')" />
+          <xsl:with-param name="multi"><xsl:text>single</xsl:text></xsl:with-param>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -75,15 +76,18 @@
     <xsl:param name="id" /> <!-- Base ID of the resulting package -->
     <xsl:param name="idsuffix" /> <!-- Suffix to attach to the end of the ID for this perticular instance -->
     <xsl:param name="bits" /> <!-- Which bit sizes to create a package for -->
+    <xsl:param name="multi" /> <!-- multi/single build -->
 
     <xsl:for-each select="sect1">
-
       <xsl:copy>
         <xsl:attribute name="id">
           <xsl:value-of select="concat($id, $idsuffix)" />
         </xsl:attribute>
         <xsl:attribute name="role">
           <xsl:text>package</xsl:text>
+        </xsl:attribute>
+        <xsl:attribute name="condition">
+          <xsl:value-of select="$multi" />
         </xsl:attribute>
         <xsl:processing-instruction name="dbhtml">
           <xsl:text>filename=&quot;</xsl:text>
@@ -106,6 +110,15 @@
   </xsl:template>
 
   <!-- Apply the profile to the 32bit package -->
+
+  <xsl:template match="//sect1/title" mode="filter-bits-32">
+    <xsl:element name="title">
+      <xsl:copy-of select="@*|node()" />
+      <xsl:if test="contains($clfs.multilib, ',')">
+        <xsl:text> - 32Bit</xsl:text>
+      </xsl:if>
+    </xsl:element>
+  </xsl:template>
 
   <xsl:template match="@*|node()" mode="filter-bits-32">
     <xsl:variable name="ismultilib">
@@ -134,6 +147,15 @@
   <xsl:template match="@c:multilib" mode="filter-bits-32" />
 
   <!-- Apply the profile to the n32 package -->
+  
+  <xsl:template match="//sect1/title" mode="filter-bits-n32">
+    <xsl:element name="title">
+      <xsl:copy-of select="@*|node()" />
+      <xsl:if test="contains($clfs.multilib, ',')">
+        <xsl:text> - N32</xsl:text>
+      </xsl:if>
+    </xsl:element>
+  </xsl:template>
 
   <xsl:template match="@*|node()" mode="filter-bits-n32">
     <xsl:variable name="ismultilib">
@@ -162,6 +184,15 @@
   <xsl:template match="@c:multilib" mode="filter-bits-n32" />
 
   <!-- Apply the profile to the 64bit package -->
+  
+  <xsl:template match="//sect1/title" mode="filter-bits-64">
+    <xsl:element name="title">
+      <xsl:copy-of select="@*|node()" />
+      <xsl:if test="contains($clfs.multilib, ',')">
+        <xsl:text> - 64Bit</xsl:text>
+      </xsl:if>
+    </xsl:element>
+  </xsl:template>
 
   <xsl:template match="@*|node()" mode="filter-bits-64">
     <xsl:variable name="ismultilib">
