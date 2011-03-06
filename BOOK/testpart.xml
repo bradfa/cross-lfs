@@ -41,6 +41,8 @@
 
           <para>Testing... 1.. 2.. 3..</para>
 
+          <para c:multilib="true" c:bits="64">This is for 64bit multilib only</para>
+
           <para c:bits="32,n32">Only 32,N32</para>
 
 <screen c:bits="32"><userinput>echo 32bit Build</userinput></screen>
