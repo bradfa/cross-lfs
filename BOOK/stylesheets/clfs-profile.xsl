@@ -86,25 +86,49 @@
           <xsl:text>.html&quot;</xsl:text>
         </xsl:processing-instruction>
 
+        <xsl:variable name="titlesuffix">
+          <xsl:if test="contains($clfs.multilib, ',') and ($multibuild = 'true')">
+            <xsl:choose>
+              <xsl:when test="$bits = '32'">
+                <xsl:text>32Bit</xsl:text>
+              </xsl:when>
+              <xsl:when test="$bits = 'n32'">
+                <xsl:text>N32</xsl:text>
+              </xsl:when>
+              <xsl:when test="$bits = '64'">
+                <xsl:text>64Bit</xsl:text>
+              </xsl:when>
+            </xsl:choose>
+          </xsl:if>
+        </xsl:variable>
+
         <xsl:for-each select="title">
           <xsl:element name="title">
             <xsl:copy-of select="@*|node()" />
-            <xsl:if test="contains($clfs.multilib, ',') and ($multibuild = 'true')">
+            <xsl:if test="string-length($titlesuffix) > 0">
               <xsl:text> - </xsl:text>
-              <xsl:choose>
-                <xsl:when test="$bits = '32'">
-                  <xsl:text>32Bit</xsl:text>
-                </xsl:when>
-                <xsl:when test="$bits = 'n32'">
-                  <xsl:text>N32</xsl:text>
-                </xsl:when>
-                <xsl:when test="$bits = '64'">
-                  <xsl:text>64Bit</xsl:text>
-                </xsl:when>
-              </xsl:choose>
+              <xsl:value-of select="$titlesuffix"/>
             </xsl:if>
           </xsl:element>
         </xsl:for-each>
+
+        <xsl:element name="indexterm">
+          <xsl:attribute name="zone">
+            <xsl:value-of select="concat($id, $idsuffix)" />
+          </xsl:attribute>
+          <xsl:element name="primary">
+            <xsl:attribute name="sortas">
+              <xsl:text>a-</xsl:text>
+              <xsl:value-of select="title" />
+            </xsl:attribute>
+            <xsl:value-of select="title" />
+          </xsl:element>
+          <xsl:if test="string-length($titlesuffix) > 0">
+            <xsl:element name="secondary">
+              <xsl:value-of select="$titlesuffix" />
+            </xsl:element>
+          </xsl:if>
+        </xsl:element>
 
         <xsl:choose>
           <xsl:when test="$bits = '32'">
