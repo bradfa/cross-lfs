@@ -12,9 +12,9 @@ include "../../../docbook/4.5/rng/docbook.rnc" {
       ((divcomponent.mix+, (refentry.class* | sect2* | simplesect*))
        | refentry.class+
        | sect2+
-         | simplesect+),
-    nav.class*
-    } | clfs.sect1.package )
+       | simplesect+),
+      nav.class*
+    } | clfs.sect.package )
 }
 
 # Extend the standard profiling attributes
@@ -23,32 +23,78 @@ local.effectivity.attrib &=
   clfs.attrib.bits,
   clfs.attrib.multilib
 
-# Custom attributes unsed in this schema
+# Profiling Attributes
 clfs.attrib.arch = attribute c:arch { text }?
 clfs.attrib.bits = attribute c:bits { text }?
 clfs.attrib.multilib = attribute c:multilib { "true" | "false" }?
-clfs.attrib.multibuild = attribute c:multibuild { "true" | "false" }
 
-# Package element to be used inside of the chapter element
-clfs.sect1.package = 
+# Inline Elements
+
+clfs.inline =
+  (clfs.inline.strong |
+   clfs.inline.dirname |
+   clfs.inline.filename |
+   clfs.inline.command |
+   text)+
+
+clfs.inline.strong = 
+  element c:strong { 
+    clfs.inline 
+  }
+clfs.inline.dirname = 
+  element c:dirname { 
+    clfs.inline 
+  }
+clfs.inline.filename =
+  element c:filename {
+    clfs.inline
+  }
+clfs.inline.command =
+  element c:command {
+    clfs.inline
+  }
+
+# Block Elements
+
+clfs.block.para =
+  element c:para {
+    clfs.inline
+  }
+  
+clfs.block.note =
+  element c:note {
+    clfs.block.para*
+  }
+
+clfs.block.command =
+  element c:command {
+    clfs.attrib.arch,
+    clfs.attrib.bits,
+    clfs.attrib.multilib,
+    attribute c:nodump {
+      "true" | "false"
+    }?,
+    (element c:literal { text } | text)+
+  }
+
+# The Package
+clfs.sect.package = 
   element c:package {
     attribute id { text },
     clfs.attrib.arch,
     clfs.attrib.bits,
     clfs.attrib.multilib,
-    clfs.attrib.multibuild,
-    sect1
-  }
-
-# Switch case to be used inside of a sect1
-clfs.sect1.switch = 
-  element c:switch {
-    element c:case {
-      clfs.attrib.arch,
-      clfs.attrib.bits,
-      clfs.attrib.multilib
-    }*,
-    element c:default {
-      empty
-    }
+    attribute c:multibuild {
+      "true" | "false"
+    },
+    
+    element c:title { text },
+    element c:version { text },
+    element c:description { clfs.inline },
+    
+    element c:install {
+      (clfs.block.para |
+       clfs.block.command |
+       clfs.block.note)+
+    }+
   }

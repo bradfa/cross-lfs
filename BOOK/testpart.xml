@@ -20,51 +20,77 @@
         <para>Testing... 1.. 2.. 3..</para>
       </sect1>
 
-      <c:package id="blah" c:multibuild="false">
-        <sect1>
-          <title><phrase>Blah</phrase></title>
+<c:package id="ch-system-bash" c:multibuild="false">
+  <c:title>Bash</c:title>
+  <c:version>4.0.1</c:version>
+  <c:description>The Bash package contains the Bourne-Again SHell.</c:description>
 
-          <para>Testing... 1.. 2.. 3..</para>
+  <c:install>
 
-          <para c:bits="32">32</para>
-          <para c:bits="n32">n32</para>
-          <para c:bits="64">64</para>
+    <c:para>Apply this patch</c:para>
 
-        </sect1>
-      </c:package>
+<c:command>patch -Np1 -i ../&bash-branch_update-patch;</c:command>
 
-      <c:package id="blarg" c:multibuild="true">
-        <sect1>
-          <title>Blarg</title>
+    <c:para>Prepare the package for compilation</c:para>
 
-          <para>Testing... 1.. 2.. 3..</para>
+<c:command>./configure -prefix=/usr -bindir=/bin \
+    -without-bash-malloc -with-installed-readline</c:command>
 
-          <para c:multilib="true" c:bits="64">This is for 64bit multilib only</para>
+    <c:para>Compile the package:</c:para>
 
-          <para c:bits="32,n32">Only 32,N32</para>
+<c:command>make</c:command>
 
-<screen c:bits="32"><userinput>echo 32bit Build</userinput></screen>
+    <c:para>To test the results, issue:
+    <c:command>make tests</c:command>.</c:para>
 
-<screen c:bits="32"><userinput>cat &lt;&lt; "EOF"
-<literal>Another
-32bit
-Command</literal>
-EOF</userinput></screen>
+    <c:para>Install the package:</c:para>
 
-          <para c:bits="64">Only 64</para>
+<c:command>make htmldir=/usr/share/doc/bash-&bash-version; install</c:command>
 
-<screen c:bits="64"><userinput>echo 64bit Build</userinput></screen>
+    <c:para>Run the newly compiled <c:command>bash</c:command> program (replacing
+    the one that is currently being executed):</c:para>
 
-          <sect2>
-            <title>Hi There</title>
+<c:command c:nodump="true">exec /bin/bash -login +h</c:command>
 
-            <para>You should always see me</para>
+    <c:note>
+      <c:para>(note+warn) The parameters used make the <c:command>bash</c:command>
+      process an interactive login shell and continue to disable hashing so
+      that new programs are found as they become available.</c:para>
+    </c:note>
 
-            <para c:bits="32" c:multilib="true">You will only see me on multilib 32bit</para>
-          </sect2>
+  </c:install>
 
-        </sect1>
-      </c:package>
+</c:package>
+
+
+<c:package id="ch-system-test" c:multibuild="true">
+  <c:title>TestPackage</c:title>
+  <c:version>1.2.3</c:version>
+  <c:description>The <c:strong>Test</c:strong> package contains a test.</c:description>
+
+  <c:install>
+
+    <c:para>Prepare the package for compilation</c:para>
+
+<c:command c:multilib="false">./configure --prefix=/usr</c:command>
+<c:command c:multilib="true" c:bits="32">CC="gcc ${BUILD32}" ./configure --prefix=/usr</c:command>
+<c:command c:multilib="true" c:bits="n32">CC="gcc ${BUILDN32}" ./configure --prefix=/usr</c:command>
+<c:command c:multilib="true" c:bits="64">CC="gcc ${BUILD64}" ./configure --prefix=/usr</c:command>
+
+    <c:para>Compile the package:</c:para>
+
+<c:command>make</c:command>
+
+    <c:para>To test the results, issue:
+    <c:command>make tests</c:command>.</c:para>
+
+    <c:para>Install the package:</c:para>
+
+<c:command>make install</c:command>
+
+  </c:install>
+
+</c:package>
 
     </chapter>
 

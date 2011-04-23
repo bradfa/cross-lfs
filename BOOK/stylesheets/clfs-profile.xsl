@@ -71,7 +71,119 @@
     <xsl:param name="idsuffix" /> <!-- Suffix to attach to the end of the ID for this perticular instance -->
     <xsl:param name="bits" /> <!-- Which bit sizes to create a package for -->
     <xsl:param name="multibuild" /> <!-- Are there multiple instances of this package? -->
+    
+    <!-- Translate the package into a sect1 -->
+    <xsl:element name="sect1">
+      
+      <!-- Set the ID of the target Sect1 -->
+      <xsl:attribute name="id">
+        <xsl:value-of select="concat($id, $idsuffix)" />
+      </xsl:attribute>  
+      
+      <!-- New Line -->
+      <xsl:text>
+</xsl:text>
+      
+      <!-- Set the Target Filename -->
+      <xsl:processing-instruction name="dbhtml">
+        <xsl:text>filename=&quot;</xsl:text>
+        <xsl:value-of select="concat($id, $idsuffix)" />
+        <xsl:text>.html&quot;</xsl:text>
+      </xsl:processing-instruction>
+      
+      <!-- New Line x2 -->
+      <xsl:text>
 
+</xsl:text>
+      
+      <!-- Determine if the title is going to have a suffix or not -->
+      <xsl:variable name="titlesuffix">
+        <xsl:if test="contains($clfs.multilib, ',') and ($multibuild = 'true')">
+          <xsl:choose>
+            <xsl:when test="$bits = '32'">
+              <xsl:text>32Bit</xsl:text>
+            </xsl:when>
+            <xsl:when test="$bits = 'n32'">
+              <xsl:text>N32</xsl:text>
+            </xsl:when>
+            <xsl:when test="$bits = '64'">
+              <xsl:text>64Bit</xsl:text>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:if>
+      </xsl:variable>
+      
+      <!-- title: Write out a new title tag -->
+      <xsl:element name="title">
+        <xsl:value-of select="c:title" />
+        <xsl:text>-</xsl:text>
+        <xsl:value-of select="c:version" />
+        <xsl:if test="string-length($titlesuffix) > 0">
+          <xsl:text> - </xsl:text>
+          <xsl:value-of select="$titlesuffix"/>
+        </xsl:if>
+      </xsl:element><!-- title -->
+
+      <!-- New Line x2 -->
+      <xsl:text>
+
+</xsl:text>
+
+      <!-- indexterm: Add the Intex Entry for this package -->
+      <xsl:element name="indexterm">
+        <xsl:attribute name="zone">
+          <xsl:value-of select="concat($id, $idsuffix)" />
+        </xsl:attribute>
+        <xsl:text>
+  </xsl:text>
+        <xsl:element name="primary">
+          <xsl:attribute name="sortas">
+            <xsl:text>a-</xsl:text>
+            <xsl:value-of select="c:title" />
+          </xsl:attribute>
+          <xsl:value-of select="c:title" />
+        </xsl:element>
+        <xsl:if test="string-length($titlesuffix) > 0">
+          <xsl:text>
+  </xsl:text>
+          <xsl:element name="secondary">
+            <xsl:value-of select="$titlesuffix" />
+          </xsl:element>
+        </xsl:if>
+        <xsl:text>
+</xsl:text>
+      </xsl:element><!-- indexterm -->
+      
+      <!-- New Line x2 -->
+      <xsl:text>
+
+</xsl:text>
+
+      <!-- sect2[role="installation"]: Add the sect2 for the package header -->
+      <xsl:element name="sect2">
+        <xsl:attribute name="role">
+          <xsl:text>installation</xsl:text>
+        </xsl:attribute>
+        <xsl:text>
+  </xsl:text>
+        <xsl:element name="title" />
+        <xsl:text>
+  </xsl:text>
+        <xsl:element name="para">
+          <xsl:copy-of select="c:description/@*|c:description/node()" />
+        </xsl:element>
+        <xsl:text>
+</xsl:text>
+      </xsl:element>
+
+      <!-- New Line x2 -->
+      <xsl:text>
+
+</xsl:text>
+
+    </xsl:element><!-- Sect1 -->
+    
+<!--
     <xsl:for-each select="sect1">
 
       <xsl:copy>
@@ -145,6 +257,7 @@
       </xsl:copy>
 
     </xsl:for-each>
+-->
 
   </xsl:template>
 

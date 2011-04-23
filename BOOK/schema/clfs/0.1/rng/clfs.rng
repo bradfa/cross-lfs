@@ -44,7 +44,7 @@
             <ref name="nav.class"/>
           </zeroOrMore>
         </element>
-        <ref name="clfs.sect1.package"/>
+        <ref name="clfs.sect.package"/>
       </choice>
     </define>
   </include>
@@ -54,7 +54,7 @@
     <ref name="clfs.attrib.bits"/>
     <ref name="clfs.attrib.multilib"/>
   </define>
-  <!-- Custom attributes unsed in this schema -->
+  <!-- Profiling Attributes -->
   <define name="clfs.attrib.arch">
     <optional>
       <attribute name="c:arch"/>
@@ -75,38 +75,107 @@
       </attribute>
     </optional>
   </define>
-  <define name="clfs.attrib.multibuild">
-    <attribute name="c:multibuild">
+  <!-- Inline Elements -->
+  <define name="clfs.inline">
+    <oneOrMore>
       <choice>
-        <value>true</value>
-        <value>false</value>
+        <ref name="clfs.inline.strong"/>
+        <ref name="clfs.inline.dirname"/>
+        <ref name="clfs.inline.filename"/>
+        <ref name="clfs.inline.command"/>
+        <text/>
       </choice>
-    </attribute>
+    </oneOrMore>
   </define>
-  <!-- Package element to be used inside of the chapter element -->
-  <define name="clfs.sect1.package">
+  <define name="clfs.inline.strong">
+    <element name="c:strong">
+      <ref name="clfs.inline"/>
+    </element>
+  </define>
+  <define name="clfs.inline.dirname">
+    <element name="c:dirname">
+      <ref name="clfs.inline"/>
+    </element>
+  </define>
+  <define name="clfs.inline.filename">
+    <element name="c:filename">
+      <ref name="clfs.inline"/>
+    </element>
+  </define>
+  <define name="clfs.inline.command">
+    <element name="c:command">
+      <ref name="clfs.inline"/>
+    </element>
+  </define>
+  <!-- Block Elements -->
+  <define name="clfs.block.para">
+    <element name="c:para">
+      <ref name="clfs.inline"/>
+    </element>
+  </define>
+  <define name="clfs.block.note">
+    <element name="c:note">
+      <zeroOrMore>
+        <ref name="clfs.block.para"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="clfs.block.command">
+    <element name="c:command">
+      <ref name="clfs.attrib.arch"/>
+      <ref name="clfs.attrib.bits"/>
+      <ref name="clfs.attrib.multilib"/>
+      <optional>
+        <attribute name="c:nodump">
+          <choice>
+            <value>true</value>
+            <value>false</value>
+          </choice>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <choice>
+          <element name="c:literal">
+            <text/>
+          </element>
+          <text/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <!-- The Package -->
+  <define name="clfs.sect.package">
     <element name="c:package">
       <attribute name="id"/>
       <ref name="clfs.attrib.arch"/>
       <ref name="clfs.attrib.bits"/>
       <ref name="clfs.attrib.multilib"/>
-      <ref name="clfs.attrib.multibuild"/>
-      <ref name="sect1"/>
-    </element>
-  </define>
-  <!-- Switch case to be used inside of a sect1 -->
-  <define name="clfs.sect1.switch">
-    <element name="c:switch">
-      <zeroOrMore>
-        <element name="c:case">
-          <ref name="clfs.attrib.arch"/>
-          <ref name="clfs.attrib.bits"/>
-          <ref name="clfs.attrib.multilib"/>
-        </element>
-      </zeroOrMore>
-      <element name="c:default">
-        <empty/>
+      <attribute name="c:multibuild">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+      <element name="c:title">
+        <text/>
       </element>
+      <element name="c:version">
+        <text/>
+      </element>
+      <element name="c:description">
+        <ref name="clfs.inline"/>
+      </element>
+      <oneOrMore>
+        <element name="c:install">
+          <oneOrMore>
+            <choice>
+              <ref name="clfs.block.para"/>
+              <ref name="clfs.block.command"/>
+              <ref name="clfs.block.note"/>
+            </choice>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
     </element>
   </define>
 </grammar>
