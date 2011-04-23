@@ -65,7 +65,7 @@
 <c:package id="ch-system-test" c:multibuild="true">
   <c:title>TestPackage</c:title>
   <c:version>1.2.3</c:version>
-  <c:description>The <c:strong>Test</c:strong> package contains a test.</c:description>
+  <c:description>The Test package contains a <c:command>test</c:command>.</c:description>
 
   <c:install>
 
@@ -76,7 +76,7 @@
 <c:command c:multilib="true" c:bits="n32">CC="gcc ${BUILDN32}" ./configure --prefix=/usr</c:command>
 <c:command c:multilib="true" c:bits="64">CC="gcc ${BUILD64}" ./configure --prefix=/usr</c:command>
 
-    <c:para>Compile the package:</c:para>
+    <c:para>Compile <c:filename>the</c:filename> package:</c:para>
 
 <c:command>make</c:command>
 

@@ -31,26 +31,47 @@ clfs.attrib.multilib = attribute c:multilib { "true" | "false" }?
 # Inline Elements
 
 clfs.inline =
-  (clfs.inline.strong |
+  (clfs.inline.literal |
+   clfs.inline.replaceable |
+   clfs.inline.application |
    clfs.inline.dirname |
    clfs.inline.filename |
    clfs.inline.command |
-   text)+
+   text)*
 
-clfs.inline.strong = 
-  element c:strong { 
+clfs.inline.common.attrib =
+  clfs.attrib.arch,
+  clfs.attrib.bits,
+  clfs.attrib.multilib
+
+clfs.inline.literal =
+  element c:literal {
+    clfs.inline.common.attrib,
     clfs.inline 
   }
-clfs.inline.dirname = 
-  element c:dirname { 
+clfs.inline.replaceable =
+  element c:replaceable {
+    clfs.inline.common.attrib,
     clfs.inline 
+  }
+clfs.inline.application = 
+  element c:application {
+    clfs.inline.common.attrib,
+    clfs.inline 
+  }
+clfs.inline.dirname =
+  element c:dirname {
+    clfs.inline.common.attrib,
+    clfs.inline
   }
 clfs.inline.filename =
   element c:filename {
+    clfs.inline.common.attrib,
     clfs.inline
   }
 clfs.inline.command =
   element c:command {
+    clfs.inline.common.attrib,
     clfs.inline
   }
 

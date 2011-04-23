@@ -77,33 +77,56 @@
   </define>
   <!-- Inline Elements -->
   <define name="clfs.inline">
-    <oneOrMore>
+    <zeroOrMore>
       <choice>
-        <ref name="clfs.inline.strong"/>
+        <ref name="clfs.inline.literal"/>
+        <ref name="clfs.inline.replaceable"/>
+        <ref name="clfs.inline.application"/>
         <ref name="clfs.inline.dirname"/>
         <ref name="clfs.inline.filename"/>
         <ref name="clfs.inline.command"/>
         <text/>
       </choice>
-    </oneOrMore>
+    </zeroOrMore>
   </define>
-  <define name="clfs.inline.strong">
-    <element name="c:strong">
+  <define name="clfs.inline.common.attrib">
+    <ref name="clfs.attrib.arch"/>
+    <ref name="clfs.attrib.bits"/>
+    <ref name="clfs.attrib.multilib"/>
+  </define>
+  <define name="clfs.inline.literal">
+    <element name="c:literal">
+      <ref name="clfs.inline.common.attrib"/>
+      <ref name="clfs.inline"/>
+    </element>
+  </define>
+  <define name="clfs.inline.replaceable">
+    <element name="c:replaceable">
+      <ref name="clfs.inline.common.attrib"/>
+      <ref name="clfs.inline"/>
+    </element>
+  </define>
+  <define name="clfs.inline.application">
+    <element name="c:application">
+      <ref name="clfs.inline.common.attrib"/>
       <ref name="clfs.inline"/>
     </element>
   </define>
   <define name="clfs.inline.dirname">
     <element name="c:dirname">
+      <ref name="clfs.inline.common.attrib"/>
       <ref name="clfs.inline"/>
     </element>
   </define>
   <define name="clfs.inline.filename">
     <element name="c:filename">
+      <ref name="clfs.inline.common.attrib"/>
       <ref name="clfs.inline"/>
     </element>
   </define>
   <define name="clfs.inline.command">
     <element name="c:command">
+      <ref name="clfs.inline.common.attrib"/>
       <ref name="clfs.inline"/>
     </element>
   </define>
