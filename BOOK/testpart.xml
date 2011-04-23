@@ -62,7 +62,6 @@
 
 </c:package>
 
-
 <c:package id="ch-system-test" c:multibuild="true">
   <c:title>TestPackage</c:title>
   <c:version>1.2.3</c:version>
