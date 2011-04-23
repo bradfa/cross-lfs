@@ -45,6 +45,12 @@
 
 <screen c:bits="32"><userinput>echo 32bit Build</userinput></screen>
 
+<screen c:bits="32"><userinput>cat &lt;&lt; "EOF"
+<literal>Another
+32bit
+Command</literal>
+EOF</userinput></screen>
+
           <para c:bits="64">Only 64</para>
 
 <screen c:bits="64"><userinput>echo 64bit Build</userinput></screen>
