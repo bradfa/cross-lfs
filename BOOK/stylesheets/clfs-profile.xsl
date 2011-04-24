@@ -192,13 +192,13 @@
         <xsl:element name="para">
           <xsl:choose>
             <xsl:when test="$bits = '32'">
-              <xsl:apply-templates select="c:description/@*|c:description/node()" mode="filter-bits-32" />
+              <xsl:apply-templates select="c:description/node()" mode="filter-bits-32" />
             </xsl:when>
             <xsl:when test="$bits = 'n32'">
-              <xsl:apply-templates select="c:description/@*|c:description/node()" mode="filter-bits-n32" />
+              <xsl:apply-templates select="c:description/node()" mode="filter-bits-n32" />
             </xsl:when>
             <xsl:when test="$bits = '64'">
-              <xsl:apply-templates select="c:description/@*|c:description/node()" mode="filter-bits-64" />
+              <xsl:apply-templates select="c:description/node()" mode="filter-bits-64" />
             </xsl:when>
           </xsl:choose>
         </xsl:element>
@@ -461,7 +461,7 @@
                       
                       <xsl:text>&#xa;      </xsl:text>
                       <xsl:element name="para">
-                        <xsl:apply-templates select="c:description/@*|c:description/node()" />
+                        <xsl:apply-templates select="c:description/node()" />
                       </xsl:element>
                       
                       <xsl:text>&#xa;      </xsl:text>
@@ -517,7 +517,7 @@
                       
                       <xsl:text>&#xa;      </xsl:text>
                       <xsl:element name="para">
-                        <xsl:apply-templates select="c:description/@*|c:description/node()" />
+                        <xsl:apply-templates select="c:description/node()" />
                       </xsl:element>
                       
                       <xsl:text>&#xa;      </xsl:text>
@@ -574,7 +574,7 @@
                       
                       <xsl:text>&#xa;      </xsl:text>
                       <xsl:element name="para">
-                        <xsl:apply-templates select="c:description/@*|c:description/node()" />
+                        <xsl:apply-templates select="c:description/node()" />
                       </xsl:element>
                       
                       <xsl:text>&#xa;      </xsl:text>
