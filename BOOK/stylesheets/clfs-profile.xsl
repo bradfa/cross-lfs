@@ -396,7 +396,7 @@
                       
                       <xsl:text>&#xa;      </xsl:text>
                       <xsl:element name="para">
-                        <xsl:apply-templates select="c:description" />
+                        <xsl:apply-templates select="c:description/@*|c:description/node()" />
                       </xsl:element>
                       
                       <xsl:text>&#xa;      </xsl:text>
@@ -452,7 +452,7 @@
                       
                       <xsl:text>&#xa;      </xsl:text>
                       <xsl:element name="para">
-                        <xsl:apply-templates select="c:description" />
+                        <xsl:apply-templates select="c:description/@*|c:description/node()" />
                       </xsl:element>
                       
                       <xsl:text>&#xa;      </xsl:text>
@@ -1130,6 +1130,47 @@
   <xsl:template match="@c:arch" mode="filter-bits-64" />
   <xsl:template match="@c:bits" mode="filter-bits-64" />
   <xsl:template match="@c:multilib" mode="filter-bits-64" />
+
+  <!-- Templates for the Inline Elements outside of the build filter -->
+
+  <xsl:template match="c:literal">
+    <xsl:element name="literal">
+      <xsl:apply-templates select="node()" />
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template match="c:replaceable">
+    <xsl:element name="replaceable">
+      <xsl:apply-templates select="node()" />
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template match="c:application">
+    <xsl:element name="application">
+      <xsl:apply-templates select="node()" />
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template match="c:dirname">
+    <xsl:element name="filename">
+      <xsl:attribute name="class">
+        <xsl:text>directory</xsl:text>
+      </xsl:attribute>
+      <xsl:apply-templates select="node()" />
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template match="c:filename">
+    <xsl:element name="filename">
+      <xsl:apply-templates select="node()" />
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template match="c:command">
+    <xsl:element name="command">
+      <xsl:apply-templates select="node()" />
+    </xsl:element>
+  </xsl:template>
 
   <!-- Apply the profile filter to the entire document -->
   <xsl:template match="//*[@c:arch]|//*[@c:multilib]">
