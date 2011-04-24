@@ -77,17 +77,23 @@ clfs.inline.command =
 
 # Block Elements
 
-clfs.block.para =
+clfs.package.para =
   element c:para {
+    clfs.attrib.arch,
+    clfs.attrib.bits,
+    clfs.attrib.multilib,
     clfs.inline
   }
   
-clfs.block.note =
+clfs.package.note =
   element c:note {
-    clfs.block.para*
+    clfs.attrib.arch,
+    clfs.attrib.bits,
+    clfs.attrib.multilib,
+    clfs.package.para*
   }
 
-clfs.block.command =
+clfs.package.command =
   element c:command {
     clfs.attrib.arch,
     clfs.attrib.bits,
@@ -114,9 +120,9 @@ clfs.sect.package =
     element c:description { clfs.inline },
     
     element c:install {
-      (clfs.block.para |
-       clfs.block.command |
-       clfs.block.note)+
+      (clfs.package.para |
+       clfs.package.command |
+       clfs.package.note)+
     }+,
     
     element c:contents {

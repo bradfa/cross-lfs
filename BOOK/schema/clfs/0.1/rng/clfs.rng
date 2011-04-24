@@ -131,19 +131,25 @@
     </element>
   </define>
   <!-- Block Elements -->
-  <define name="clfs.block.para">
+  <define name="clfs.package.para">
     <element name="c:para">
+      <ref name="clfs.attrib.arch"/>
+      <ref name="clfs.attrib.bits"/>
+      <ref name="clfs.attrib.multilib"/>
       <ref name="clfs.inline"/>
     </element>
   </define>
-  <define name="clfs.block.note">
+  <define name="clfs.package.note">
     <element name="c:note">
+      <ref name="clfs.attrib.arch"/>
+      <ref name="clfs.attrib.bits"/>
+      <ref name="clfs.attrib.multilib"/>
       <zeroOrMore>
-        <ref name="clfs.block.para"/>
+        <ref name="clfs.package.para"/>
       </zeroOrMore>
     </element>
   </define>
-  <define name="clfs.block.command">
+  <define name="clfs.package.command">
     <element name="c:command">
       <ref name="clfs.attrib.arch"/>
       <ref name="clfs.attrib.bits"/>
@@ -192,9 +198,9 @@
         <element name="c:install">
           <oneOrMore>
             <choice>
-              <ref name="clfs.block.para"/>
-              <ref name="clfs.block.command"/>
-              <ref name="clfs.block.note"/>
+              <ref name="clfs.package.para"/>
+              <ref name="clfs.package.command"/>
+              <ref name="clfs.package.note"/>
             </choice>
           </oneOrMore>
         </element>
