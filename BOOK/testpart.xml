@@ -61,22 +61,28 @@
 
   <c:contents>
 
-<c:directory>
-  <c:name>/usr/blah</c:name>
-  <c:description>Some Crap</c:description>
-</c:directory>
-<c:directory>
-  <c:name>/usr/blah2</c:name>
-  <c:description>Some Crap2</c:description>
-</c:directory>
-<c:directory>
-  <c:name>/usr/blah3</c:name>
-  <c:description>Some Crap2</c:description>
-</c:directory>
-<c:directory>
-  <c:name>/usr/blah4</c:name>
-  <c:description>Some Crap2</c:description>
-</c:directory>
+    <c:library>
+      <c:name>libjoe</c:name>
+      <c:description>This is a bullshit library for a <c:command>test</c:command>.</c:description>
+    </c:library>
+
+    <c:directory>
+      <c:name>/usr/blah</c:name>
+      <c:description>Some Crap</c:description>
+    </c:directory>
+    <c:directory>
+      <c:name>/usr/blah2</c:name>
+      <c:description>Some Crap2</c:description>
+    </c:directory>
+    <c:directory>
+      <c:name>/usr/blah3</c:name>
+      <c:description>Some Crap2</c:description>
+    </c:directory>
+    <c:directory>
+      <c:name>/usr/blah4</c:name>
+      <c:description>Some Crap2</c:description>
+    </c:directory>
+
   </c:contents>
 
 </c:package>

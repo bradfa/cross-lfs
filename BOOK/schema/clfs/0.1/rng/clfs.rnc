@@ -123,7 +123,7 @@ clfs.sect.package =
       attribute c:ref {
         text
       } | (
-        element c:library {
+        element c:program {
           element c:name {
             text
           },
@@ -131,7 +131,7 @@ clfs.sect.package =
             clfs.inline
           }
         }*,
-        element c:program {
+        element c:library {
           element c:name {
             text
           },

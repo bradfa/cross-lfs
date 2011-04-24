@@ -223,10 +223,7 @@
       <!-- c:contents -> sect2: Build or reference the contents sect2 -->
       <xsl:for-each select="c:contents">
 
-        <!-- New Line x2 -->
-        <xsl:text>
-
-</xsl:text>
+        <xsl:text>&#xa;&#xa;</xsl:text>
 
         <xsl:element name="sect2">
           <xsl:attribute name="role">
@@ -235,12 +232,9 @@
           <xsl:choose>
             <xsl:when test="string-length(@c:ref) > 0">
               <!-- Insert an xref to the actual contents list -->
-              <xsl:text>
-  </xsl:text>
+              <xsl:text>&#xa;  </xsl:text>
               <xsl:element name="title" />
-              <xsl:text>
-
-  </xsl:text>
+              <xsl:text>&#xa;&#xa;  </xsl:text>
             <xsl:element name="para">
               <xsl:text>Details on this package are located in </xsl:text>
               <xsl:element name="xref">
@@ -260,66 +254,38 @@
                 <xsl:value-of select="$id" />
                 <xsl:text>-contents</xsl:text>
               </xsl:attribute>
-              <xsl:text>
-  </xsl:text>
+              <xsl:text>&#xa;  </xsl:text>
               <xsl:element name="title">
                 <xsl:text>Contents of </xsl:text>
                 <xsl:value-of select="../c:title" />
               </xsl:element>
-              <xsl:text>
-
-</xsl:text>
+              <xsl:text>&#xa;&#xa;</xsl:text>
               <!-- Begin the Summary List -->
               <xsl:element name="segmentedlist">
-                <xsl:if test="count(c:library) &gt; 0">
-                  <xsl:text>
-  </xsl:text>
-                  <xsl:element name="segtitle">
-                    <xsl:text>Installed Libraries</xsl:text>
-                  </xsl:element>
-                </xsl:if>
                 <xsl:if test="count(c:program) &gt; 0">
-                  <xsl:text>
-  </xsl:text>
+                  <xsl:text>&#xa;  </xsl:text>
                   <xsl:element name="segtitle">
                     <xsl:text>Installed Programs</xsl:text>
                   </xsl:element>
                 </xsl:if>
+                <xsl:if test="count(c:library) &gt; 0">
+                  <xsl:text>&#xa;  </xsl:text>
+                  <xsl:element name="segtitle">
+                    <xsl:text>Installed Libraries</xsl:text>
+                  </xsl:element>
+                </xsl:if>
                 <xsl:if test="count(c:directory) &gt; 0">
-                  <xsl:text>
-  </xsl:text>
+                  <xsl:text>&#xa;  </xsl:text>
                   <xsl:element name="segtitle">
                     <xsl:text>Installed Directories</xsl:text>
                   </xsl:element>
                 </xsl:if>
-                <xsl:text>
-
-  </xsl:text>
+                <xsl:text>&#xa;&#xa;  </xsl:text>
                 <xsl:element name="seglistitem">
-                  <xsl:if test="count(c:library) &gt; 0">
-                    <xsl:text>
-    </xsl:text>
-                    <!-- Begin the seg list for Libraries -->
-                    <xsl:element name="seg">
-                      <xsl:for-each select="c:library">
-                        <xsl:value-of select="c:name" />
-                        <xsl:if test="count(../c:library) &gt; 1">
-                          <xsl:choose>
-                            <xsl:when test="position() &lt; (last() - 1)">
-                              <xsl:text>, </xsl:text>
-                            </xsl:when>
-                            <xsl:when test="position() = last() - 1">
-                              <xsl:text> and </xsl:text>
-                            </xsl:when>
-                          </xsl:choose>
-                        </xsl:if>
-                      </xsl:for-each>
-                    </xsl:element>
-                  </xsl:if>
+                  
+                  <!-- Begin the seg list for Programs -->
                   <xsl:if test="count(c:program) &gt; 0">
-                    <xsl:text>
-    </xsl:text>
-                    <!-- Begin the seg list for Programs -->
+                    <xsl:text>&#xa;    </xsl:text>
                     <xsl:element name="seg">
                       <xsl:for-each select="c:program">
                         <xsl:value-of select="c:name" />
@@ -336,10 +302,32 @@
                       </xsl:for-each>
                     </xsl:element>
                   </xsl:if>
+                  <!-- End the seg list for Programs -->
+                  
+                  <!-- Begin the seg list for Libraries -->
+                  <xsl:if test="count(c:library) &gt; 0">
+                    <xsl:text>&#xa;    </xsl:text>
+                    <xsl:element name="seg">
+                      <xsl:for-each select="c:library">
+                        <xsl:value-of select="c:name" />
+                        <xsl:if test="count(../c:library) &gt; 1">
+                          <xsl:choose>
+                            <xsl:when test="position() &lt; (last() - 1)">
+                              <xsl:text>, </xsl:text>
+                            </xsl:when>
+                            <xsl:when test="position() = last() - 1">
+                              <xsl:text> and </xsl:text>
+                            </xsl:when>
+                          </xsl:choose>
+                        </xsl:if>
+                      </xsl:for-each>
+                    </xsl:element>
+                  </xsl:if>
+                  <!-- End the seg list for Libraries -->
+                  
+                  <!-- Begin the seg list for Directories -->
                   <xsl:if test="count(c:directory) &gt; 0">
-                    <xsl:text>
-    </xsl:text>
-                    <!-- Begin the seg list for Directories -->
+                    <xsl:text>&#xa;    </xsl:text>
                     <xsl:element name="seg">
                       <xsl:for-each select="c:directory">
                         <xsl:value-of select="c:name" />
@@ -354,34 +342,107 @@
                       </xsl:for-each>
                     </xsl:element>
                   </xsl:if>
-                  <xsl:text>
-  </xsl:text>
+                  <!-- End the seg list for Directories -->
+                  
+                  <xsl:text>&#xa;  </xsl:text>
                 </xsl:element>
-                <xsl:text>
-</xsl:text>
+                <xsl:text>&#xa;</xsl:text>
               </xsl:element>
-              <xsl:text>
-
-</xsl:text>
-              <!-- Insert Short Desc List Here -->
+              <xsl:text>&#xa;&#xa;</xsl:text>
               <!-- End of the Summary List -->
+              
+              <!-- Begin Short Desc List -->
+              <xsl:element name="variablelist">
+                
+                <!-- Render As -->
+                <xsl:text>&#xa;  </xsl:text>
+                <xsl:element name="bridgehead">
+                  <xsl:attribute name="renderas">
+                    <xsl:text>sect3</xsl:text>
+                  </xsl:attribute>
+                  <xsl:text>Short Descriptions</xsl:text>
+                </xsl:element>
+                
+                <!-- Processing Instructions -->
+                <xsl:text>&#xa;  </xsl:text>
+                <xsl:processing-instruction name="dbfo">
+                  <xsl:text>list-presentation="list"</xsl:text>
+                </xsl:processing-instruction>
+                <xsl:text>&#xa;  </xsl:text>
+                <xsl:processing-instruction name="dbhtml">
+                  <xsl:text>list-presentation="table"</xsl:text>
+                </xsl:processing-instruction>
+                
+                <!-- Begin the Short Desc For-Each for Libraries -->
+                <xsl:for-each select="c:library">
+                  <xsl:text>&#xa;&#xa;  </xsl:text>
+                  <xsl:element name="varlistentry">
+                    <xsl:attribute name="id">
+                      <xsl:value-of select="c:name" />
+                    </xsl:attribute>
+                    
+                    <!-- Term -->
+                    <xsl:text>&#xa;    </xsl:text>
+                    <xsl:element name="term">
+                      <xsl:element name="filename">
+                        <xsl:attribute name="class">
+                          <xsl:text>libraryfile</xsl:text>
+                        </xsl:attribute>
+                      </xsl:element>
+                    </xsl:element>
+                    <!-- End Term -->
+                    
+                    <!-- List Item -->
+                    <xsl:text>&#xa;    </xsl:text>
+                    <xsl:element name="listitem">
+                      
+                      <xsl:text>&#xa;      </xsl:text>
+                      <xsl:element name="para">
+                        <xsl:apply-templates select="c:description" />
+                      </xsl:element>
+                      
+                      <xsl:text>&#xa;      </xsl:text>
+                      <xsl:element name="indexterm">
+                        <xsl:attribute name="zone">
+                          <xsl:value-of select="$id" />
+                          <xsl:text> </xsl:text>
+                          <xsl:value-of select="c:name" />
+                        </xsl:attribute>
+                        <xsl:text>&#xa;        </xsl:text>
+                        <xsl:element name="primary">
+                          <xsl:attribute name="sortas">
+                            <xsl:text>c-</xsl:text>
+                            <xsl:value-of select="c:name" />
+                          </xsl:attribute>
+                          <xsl:value-of select="c:name" />
+                        </xsl:element>
+                        <xsl:text>&#xa;      </xsl:text>
+                      </xsl:element>
+                      
+                      <xsl:text>&#xa;    </xsl:text>
+                    </xsl:element><!-- listitem -->
+                    <!-- End List Item -->
+                    
+                    <xsl:text>&#xa;  </xsl:text>
+                  </xsl:element><!-- varlistentry -->
+                </xsl:for-each>
+                <!-- End the Short Desc For-Each for Libraries -->
+
+                <xsl:text>&#xa;&#xa;</xsl:text>
+              </xsl:element><!-- variablelist -->
+              <!-- End Short Desc List -->
             </xsl:otherwise>
           </xsl:choose>
-          <xsl:text>
-</xsl:text>
-        </xsl:element>
+          
+          <xsl:text>&#xa;&#xa;</xsl:text>
+        </xsl:element><!-- sect2 -->
       </xsl:for-each><!-- c:contents -> sect2 -->
 
-      <!-- New Line x2 -->
-      <xsl:text>
-
-</xsl:text>
+      <xsl:text>&#xa;&#xa;</xsl:text>
 
     </xsl:element><!-- Sect1 -->
 
   </xsl:template><!-- package-stub -->
-
-  <!-- -->
 
   <!-- Apply the profile to the 32bit package -->
   
