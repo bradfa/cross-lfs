@@ -162,7 +162,7 @@
       <!-- sect2[role="installation"]: Add the sect2 for the package header -->
       <xsl:element name="sect2">
         <xsl:attribute name="role">
-          <xsl:text>installation</xsl:text>
+          <xsl:text>package</xsl:text>
         </xsl:attribute>
         <xsl:text>
   </xsl:text>
@@ -199,7 +199,11 @@
           <xsl:text>
   </xsl:text>
           <xsl:element name="title">
-            <xsl:text>Installing</xsl:text>
+            <xsl:attribute name="role">
+              <xsl:text>installation</xsl:text>
+            </xsl:attribute>
+            <xsl:text>Installation of </xsl:text>
+            <xsl:value-of select="../c:title" />
           </xsl:element>
           <xsl:text>
 
