@@ -50,6 +50,16 @@
         </xsl:with-param>
         <xsl:with-param name="bits" select="substring-before(concat($bits, ','), ',')" />
         <xsl:with-param name="multibuild" select="$multibuild" />
+        <xsl:with-param name="lastinseries">
+          <xsl:choose>
+            <xsl:when test="$remainingbits">
+              <xsl:text>false</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>true</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:with-param>
       </xsl:call-template>
     </xsl:if>
 
@@ -71,6 +81,7 @@
     <xsl:param name="idsuffix" /> <!-- Suffix to attach to the end of the ID for this perticular instance -->
     <xsl:param name="bits" /> <!-- Which bit sizes to create a package for -->
     <xsl:param name="multibuild" /> <!-- Are there multiple instances of this package? -->
+    <xsl:param name="lastinseries" /> <!-- Is this the past package in the multilib series? -->
     
     <!-- Translate the package into a sect1 -->
     <xsl:element name="sect1">
@@ -143,17 +154,19 @@
           </xsl:attribute>
           <xsl:value-of select="c:title" />
         </xsl:element>
-        <xsl:if test="(string-length($titlesuffix) + string-length(c:variant)) &gt; 0">
+        <xsl:if test="(string-length($titlesuffix) &gt; 0 and $lastinseries = 'false') or c:variant">
           <xsl:text>
   </xsl:text>
           <xsl:element name="secondary">
-            <xsl:if test="string-length(c:variant) &gt; 0">
+            <xsl:if test="c:variant">
               <xsl:value-of select="c:variant" />
-              <xsl:if test="string-length($titlesuffix) &gt; 0">
+            </xsl:if>
+            <xsl:if test="string-length($titlesuffix) &gt; 0 and $lastinseries = 'false'">
+              <xsl:if test="c:variant">
                 <xsl:text>, </xsl:text>
               </xsl:if>
+              <xsl:value-of select="$titlesuffix" />
             </xsl:if>
-            <xsl:value-of select="$titlesuffix" />
           </xsl:element>
         </xsl:if>
         <xsl:text>
@@ -275,7 +288,7 @@
             <xsl:text>content</xsl:text>
           </xsl:attribute>
           <xsl:choose>
-            <xsl:when test="string-length(@c:ref) > 0">
+            <xsl:when test="string-length(@c:ref) > 0 or $lastinseries = 'false'">
               <!-- Insert an xref to the actual contents list -->
               <xsl:text>&#xa;  </xsl:text>
               <xsl:element name="title" />
@@ -284,7 +297,14 @@
               <xsl:text>Details on this package are located in </xsl:text>
               <xsl:element name="xref">
                 <xsl:attribute name="linkend">
-                  <xsl:value-of select="@c:ref" />
+                  <xsl:choose>
+                    <xsl:when test="string-length(@c:ref) > 0">
+                      <xsl:value-of select="@c:ref" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="$id" />
+                    </xsl:otherwise>
+                  </xsl:choose>
                   <xsl:text>-contents</xsl:text>
                 </xsl:attribute>
                 <xsl:attribute name="role">
@@ -593,7 +613,7 @@
           <xsl:text>&#xa;&#xa;</xsl:text>
         </xsl:element><!-- sect2 -->
       </xsl:for-each><!-- c:contents -> sect2 -->
-
+      
       <xsl:text>&#xa;&#xa;</xsl:text>
 
     </xsl:element><!-- Sect1 -->
