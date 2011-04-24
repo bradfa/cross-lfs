@@ -197,6 +197,32 @@
       </oneOrMore>
     </element>
   </define>
+  <define name="clfs.package.title">
+    <element name="c:title">
+      <ref name="xml.attrib.base"/>
+      <text/>
+    </element>
+  </define>
+  <define name="clfs.package.version">
+    <element name="c:version">
+      <ref name="xml.attrib.base"/>
+      <text/>
+    </element>
+  </define>
+  <define name="clfs.package.variant">
+    <optional>
+      <element name="c:variant">
+        <ref name="xml.attrib.base"/>
+        <text/>
+      </element>
+    </optional>
+  </define>
+  <define name="clfs.package.description">
+    <element name="c:description">
+      <ref name="xml.attrib.base"/>
+      <ref name="clfs.inline"/>
+    </element>
+  </define>
   <!-- The Package -->
   <define name="clfs.sect.package">
     <element name="c:package">
@@ -211,24 +237,10 @@
           <value>false</value>
         </choice>
       </attribute>
-      <element name="c:title">
-        <ref name="xml.attrib.base"/>
-        <text/>
-      </element>
-      <element name="c:version">
-        <ref name="xml.attrib.base"/>
-        <text/>
-      </element>
-      <optional>
-        <element name="c:variant">
-          <ref name="xml.attrib.base"/>
-          <text/>
-        </element>
-      </optional>
-      <element name="c:description">
-        <ref name="xml.attrib.base"/>
-        <ref name="clfs.inline"/>
-      </element>
+      <ref name="clfs.package.title"/>
+      <ref name="clfs.package.version"/>
+      <ref name="clfs.package.variant"/>
+      <ref name="clfs.package.description"/>
       <optional>
         <element name="c:install">
           <oneOrMore>

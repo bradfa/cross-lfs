@@ -122,6 +122,30 @@ clfs.package.command =
     (element c:literal { text } | text)+
   }
 
+clfs.package.title =
+  element c:title {
+    xml.attrib.base,
+    text
+  }
+
+clfs.package.version =
+  element c:version {
+    xml.attrib.base,
+    text
+  }
+
+clfs.package.variant =
+  element c:variant {
+    xml.attrib.base,
+    text
+  }?
+
+clfs.package.description =
+  element c:description {
+    xml.attrib.base,
+    clfs.inline
+  }
+
 # The Package
 clfs.sect.package = 
   element c:package {
@@ -134,23 +158,11 @@ clfs.sect.package =
       "true" | "false"
     },
     
-    element c:title {
-      xml.attrib.base,
-      text
-    },
-    element c:version {
-      xml.attrib.base,
-      text
-    },
-    element c:variant {
-      xml.attrib.base,
-      text
-    }?,
-    element c:description {
-      xml.attrib.base,
-      clfs.inline
-    },
-    
+    clfs.package.title,
+    clfs.package.version,
+    clfs.package.variant,
+    clfs.package.description,
+
     element c:install {
       (clfs.package.para |
        clfs.package.command |
