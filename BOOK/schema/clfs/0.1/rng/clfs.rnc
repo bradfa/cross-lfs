@@ -135,6 +135,13 @@ clfs.sect.package =
        clfs.package.warning)+
     }?,
     
+    element c:config {
+      (clfs.package.para |
+       clfs.package.command |
+       clfs.package.note |
+       clfs.package.warning)+
+    }?,
+    
     element c:contents {
       attribute c:ref {
         text

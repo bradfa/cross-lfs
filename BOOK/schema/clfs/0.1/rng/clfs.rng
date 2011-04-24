@@ -226,6 +226,18 @@
         </element>
       </optional>
       <optional>
+        <element name="c:config">
+          <oneOrMore>
+            <choice>
+              <ref name="clfs.package.para"/>
+              <ref name="clfs.package.command"/>
+              <ref name="clfs.package.note"/>
+              <ref name="clfs.package.warning"/>
+            </choice>
+          </oneOrMore>
+        </element>
+      </optional>
+      <optional>
         <element name="c:contents">
           <choice>
             <attribute name="c:ref"/>

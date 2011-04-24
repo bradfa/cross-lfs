@@ -224,6 +224,41 @@
         </xsl:element>
       </xsl:for-each><!-- c:install -> sect2  -->
 
+      <!-- c:config -> sect2: For each c:config build a sect2 section -->
+      <xsl:for-each select="c:config">
+        <xsl:element name="sect2">
+          <xsl:attribute name="id">
+            <xsl:value-of select="$id"/>
+            <xsl:text>-conf</xsl:text>
+          </xsl:attribute>
+          <xsl:text>
+  </xsl:text>
+          <xsl:element name="title">
+            <xsl:attribute name="role">
+              <xsl:text>configuration</xsl:text>
+            </xsl:attribute>
+            <xsl:text>Configuring </xsl:text>
+            <xsl:value-of select="../c:title" />
+          </xsl:element>
+          <xsl:text>
+
+</xsl:text>
+          <xsl:choose>
+            <xsl:when test="$bits = '32'">
+              <xsl:apply-templates select="@*|node()" mode="filter-bits-32" />
+            </xsl:when>
+            <xsl:when test="$bits = 'n32'">
+              <xsl:apply-templates select="@*|node()" mode="filter-bits-n32" />
+            </xsl:when>
+            <xsl:when test="$bits = '64'">
+              <xsl:apply-templates select="@*|node()" mode="filter-bits-64" />
+            </xsl:when>
+          </xsl:choose>
+          <xsl:text>
+</xsl:text>
+        </xsl:element>
+      </xsl:for-each><!-- c:config -> sect2  -->
+
       <!-- c:contents -> sect2: Build or reference the contents sect2 -->
       <xsl:for-each select="c:contents">
 
