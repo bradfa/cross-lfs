@@ -14,14 +14,14 @@
     <primary sortas="a-Bash">Bash</primary>
     <secondary>temporary system</secondary>
   </indexterm>
-
+<!--
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
   href="../../final-system/common/bash.xml"
   xpointer="xpointer(//*[@role='package'])"/>
-
+-->
   <sect2 role="installation">
     <title>Installation of Bash</title>
-
+<!--
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
     href="../common/bash.xml"
     xpointer="xpointer(//*[@os='p1'])"/>
@@ -41,12 +41,12 @@
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
     href="../common/bash.xml"
     xpointer="xpointer(//*[@os='a'])"/>
-
+-->
 <screen os="b"><userinput>CC="${CC} ${BUILD64}" CXX="${CXX} ${BUILD64}" \
    ./configure --prefix=/tools \
    --build=${CLFS_HOST} --host=${CLFS_TARGET} \
    --without-bash-malloc --cache-file=config.cache</userinput></screen>
-
+<!--
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
     href="../common/bash.xml"
     xpointer="xpointer(//*[@os='c'])"/>
@@ -74,9 +74,9 @@
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
     href="../common/bash.xml"
     xpointer="xpointer(//*[@os='t4'])"/>
-
+-->
   </sect2>
-
+<!--
   <sect2 role="content">
     <title/>
 
@@ -84,5 +84,5 @@
     linkend="contents-bash" role="."/></para>
 
   </sect2>
-
+-->
 </sect1>

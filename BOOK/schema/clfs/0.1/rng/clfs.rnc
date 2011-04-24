@@ -115,6 +115,7 @@ clfs.package.command =
 # The Package
 clfs.sect.package = 
   element c:package {
+    attribute xml:base { text }?,
     attribute id { text },
     clfs.attrib.arch,
     clfs.attrib.bits,
