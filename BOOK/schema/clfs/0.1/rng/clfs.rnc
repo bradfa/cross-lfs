@@ -38,6 +38,8 @@ clfs.attrib.arch = attribute c:arch { text }?
 clfs.attrib.bits = attribute c:bits { text }?
 clfs.attrib.multilib = attribute c:multilib { "true" | "false" }?
 
+clfs.attrib.r = attribute c:r { text }?
+
 # Inline Elements
 
 clfs.inline =
@@ -89,33 +91,41 @@ clfs.inline.command =
 
 clfs.package.para =
   element c:para {
+    xml.attrib.base,
     clfs.attrib.arch,
     clfs.attrib.bits,
     clfs.attrib.multilib,
+    clfs.attrib.r,
     clfs.inline
   }
   
 clfs.package.note =
   element c:note {
+    xml.attrib.base,
     clfs.attrib.arch,
     clfs.attrib.bits,
     clfs.attrib.multilib,
+    clfs.attrib.r,
     (clfs.package.para | clfs.package.command)*
   }
   
 clfs.package.warning =
   element c:note {
+    xml.attrib.base,
     clfs.attrib.arch,
     clfs.attrib.bits,
     clfs.attrib.multilib,
+    clfs.attrib.r,
     (clfs.package.para | clfs.package.command)*
   }
 
 clfs.package.command =
   element c:command {
+    xml.attrib.base,
     clfs.attrib.arch,
     clfs.attrib.bits,
     clfs.attrib.multilib,
+    clfs.attrib.r,
     attribute c:nodump {
       "true" | "false"
     }?,

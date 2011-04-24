@@ -84,6 +84,11 @@
       </attribute>
     </optional>
   </define>
+  <define name="clfs.attrib.r">
+    <optional>
+      <attribute name="c:r"/>
+    </optional>
+  </define>
   <!-- Inline Elements -->
   <define name="clfs.inline">
     <zeroOrMore>
@@ -142,17 +147,21 @@
   <!-- Block Elements -->
   <define name="clfs.package.para">
     <element name="c:para">
+      <ref name="xml.attrib.base"/>
       <ref name="clfs.attrib.arch"/>
       <ref name="clfs.attrib.bits"/>
       <ref name="clfs.attrib.multilib"/>
+      <ref name="clfs.attrib.r"/>
       <ref name="clfs.inline"/>
     </element>
   </define>
   <define name="clfs.package.note">
     <element name="c:note">
+      <ref name="xml.attrib.base"/>
       <ref name="clfs.attrib.arch"/>
       <ref name="clfs.attrib.bits"/>
       <ref name="clfs.attrib.multilib"/>
+      <ref name="clfs.attrib.r"/>
       <zeroOrMore>
         <choice>
           <ref name="clfs.package.para"/>
@@ -163,9 +172,11 @@
   </define>
   <define name="clfs.package.warning">
     <element name="c:note">
+      <ref name="xml.attrib.base"/>
       <ref name="clfs.attrib.arch"/>
       <ref name="clfs.attrib.bits"/>
       <ref name="clfs.attrib.multilib"/>
+      <ref name="clfs.attrib.r"/>
       <zeroOrMore>
         <choice>
           <ref name="clfs.package.para"/>
@@ -176,9 +187,11 @@
   </define>
   <define name="clfs.package.command">
     <element name="c:command">
+      <ref name="xml.attrib.base"/>
       <ref name="clfs.attrib.arch"/>
       <ref name="clfs.attrib.bits"/>
       <ref name="clfs.attrib.multilib"/>
+      <ref name="clfs.attrib.r"/>
       <optional>
         <attribute name="c:nodump">
           <choice>
