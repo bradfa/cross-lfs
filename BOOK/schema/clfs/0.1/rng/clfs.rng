@@ -145,7 +145,23 @@
       <ref name="clfs.attrib.bits"/>
       <ref name="clfs.attrib.multilib"/>
       <zeroOrMore>
-        <ref name="clfs.package.para"/>
+        <choice>
+          <ref name="clfs.package.para"/>
+          <ref name="clfs.package.command"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="clfs.package.warning">
+    <element name="c:note">
+      <ref name="clfs.attrib.arch"/>
+      <ref name="clfs.attrib.bits"/>
+      <ref name="clfs.attrib.multilib"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="clfs.package.para"/>
+          <ref name="clfs.package.command"/>
+        </choice>
       </zeroOrMore>
     </element>
   </define>
@@ -201,6 +217,7 @@
               <ref name="clfs.package.para"/>
               <ref name="clfs.package.command"/>
               <ref name="clfs.package.note"/>
+              <ref name="clfs.package.warning"/>
             </choice>
           </oneOrMore>
         </element>

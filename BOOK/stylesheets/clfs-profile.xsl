@@ -578,6 +578,50 @@
       </xsl:if>
     </xsl:if>
   </xsl:template>
+  
+  <xsl:template match="c:note" mode="filter-bits-32">
+    <xsl:variable name="ismultilib">
+      <xsl:choose>
+        <xsl:when test="contains($clfs.multilib, ',')">
+          <xsl:text>true</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>false</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:if test="(string-length(@c:arch) = 0) or contains(concat(',',@c:arch,','), concat(',', $clfs.arch, ','))">
+      <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
+        <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',32,')">
+          <xsl:element name="note">
+            <xsl:apply-templates select="node()" mode="filter-bits-32" />
+          </xsl:element>
+        </xsl:if>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="c:warning" mode="filter-bits-32">
+    <xsl:variable name="ismultilib">
+      <xsl:choose>
+        <xsl:when test="contains($clfs.multilib, ',')">
+          <xsl:text>true</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>false</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:if test="(string-length(@c:arch) = 0) or contains(concat(',',@c:arch,','), concat(',', $clfs.arch, ','))">
+      <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
+        <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',32,')">
+          <xsl:element name="warning">
+            <xsl:apply-templates select="node()" mode="filter-bits-32" />
+          </xsl:element>
+        </xsl:if>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template match="c:install/c:command" mode="filter-bits-32">
     <xsl:variable name="ismultilib">
@@ -770,6 +814,50 @@
       </xsl:if>
     </xsl:if>
   </xsl:template>
+  
+  <xsl:template match="c:note" mode="filter-bits-n32">
+    <xsl:variable name="ismultilib">
+      <xsl:choose>
+        <xsl:when test="contains($clfs.multilib, ',')">
+          <xsl:text>true</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>false</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:if test="(string-length(@c:arch) = 0) or contains(concat(',',@c:arch,','), concat(',', $clfs.arch, ','))">
+      <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
+        <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',n32,')">
+          <xsl:element name="note">
+            <xsl:apply-templates select="node()" mode="filter-bits-n32" />
+          </xsl:element>
+        </xsl:if>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="c:warning" mode="filter-bits-n32">
+    <xsl:variable name="ismultilib">
+      <xsl:choose>
+        <xsl:when test="contains($clfs.multilib, ',')">
+          <xsl:text>true</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>false</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:if test="(string-length(@c:arch) = 0) or contains(concat(',',@c:arch,','), concat(',', $clfs.arch, ','))">
+      <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
+        <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',n32,')">
+          <xsl:element name="warning">
+            <xsl:apply-templates select="node()" mode="filter-bits-n32" />
+          </xsl:element>
+        </xsl:if>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template match="c:install/c:command" mode="filter-bits-n32">
     <xsl:variable name="ismultilib">
@@ -956,6 +1044,50 @@
       <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
         <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',64,')">
           <xsl:element name="para">
+            <xsl:apply-templates select="node()" mode="filter-bits-64" />
+          </xsl:element>
+        </xsl:if>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="c:note" mode="filter-bits-64">
+    <xsl:variable name="ismultilib">
+      <xsl:choose>
+        <xsl:when test="contains($clfs.multilib, ',')">
+          <xsl:text>true</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>false</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:if test="(string-length(@c:arch) = 0) or contains(concat(',',@c:arch,','), concat(',', $clfs.arch, ','))">
+      <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
+        <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',64,')">
+          <xsl:element name="note">
+            <xsl:apply-templates select="node()" mode="filter-bits-64" />
+          </xsl:element>
+        </xsl:if>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="c:warning" mode="filter-bits-64">
+    <xsl:variable name="ismultilib">
+      <xsl:choose>
+        <xsl:when test="contains($clfs.multilib, ',')">
+          <xsl:text>true</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>false</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:if test="(string-length(@c:arch) = 0) or contains(concat(',',@c:arch,','), concat(',', $clfs.arch, ','))">
+      <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
+        <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',64,')">
+          <xsl:element name="warning">
             <xsl:apply-templates select="node()" mode="filter-bits-64" />
           </xsl:element>
         </xsl:if>

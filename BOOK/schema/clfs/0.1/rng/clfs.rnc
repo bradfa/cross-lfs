@@ -90,7 +90,15 @@ clfs.package.note =
     clfs.attrib.arch,
     clfs.attrib.bits,
     clfs.attrib.multilib,
-    clfs.package.para*
+    (clfs.package.para | clfs.package.command)*
+  }
+  
+clfs.package.warning =
+  element c:note {
+    clfs.attrib.arch,
+    clfs.attrib.bits,
+    clfs.attrib.multilib,
+    (clfs.package.para | clfs.package.command)*
   }
 
 clfs.package.command =
@@ -122,7 +130,8 @@ clfs.sect.package =
     element c:install {
       (clfs.package.para |
        clfs.package.command |
-       clfs.package.note)+
+       clfs.package.note |
+       clfs.package.warning)+
     }+,
     
     element c:contents {
