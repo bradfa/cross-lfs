@@ -1,134 +1,100 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!DOCTYPE c:package [
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 ]>
 
-<sect1 id="ch-system-bash" role="wrap">
-  <?dbhtml filename="bash.html"?>
+<c:package xmlns:c="http://schema.cross-lfs.org/book" id="ch-system-bash" c:multibuild="false">
 
-  <title>Bash-&bash-version;</title>
+  <c:title>Bash</c:title>
+  <c:version>&bash-version;</c:version>
+  <c:description>The Bash package contains the Bourne-Again SHell.</c:description>
 
-  <indexterm zone="ch-system-bash">
-    <primary sortas="a-Bash">Bash</primary>
-  </indexterm>
+  <c:install>
 
-  <sect2 role="package">
-    <title/>
+    <c:para>The following patch contains updates from the maintainer. The
+    maintainer of Bash only releases these patches to fix serious issues:</c:para>
 
-    <para>The Bash package contains the Bourne-Again SHell.</para>
+<c:command>patch -Np1 -i ../&bash-branch_update-patch;</c:command>
 
-  </sect2>
+    <c:para c:multilib="true">The following sed points configure towards the
+    correct library directory while searching for Readline:</c:para>
 
-  <sect2 role="installation">
-    <title>Installation of Bash</title>
+<c:command c:multilib="true">sed -i "/ac_cv_rl_libdir/s@/lib@&amp;64@" configure</c:command>
 
-    <para os="p1">The following patch contains updates from the maintainer. The
-    maintainer of Bash only releases these patches to fix serious issues:</para>
+    <c:para>Prepare Bash for compilation:</c:para>
 
-<screen os="p2"><userinput>patch -Np1 -i ../&bash-branch_update-patch;</userinput></screen>
+<c:command c:multilib="false">./configure --prefix=/usr --bindir=/bin \
+    --without-bash-malloc --with-installed-readline</c:command>
+<c:command c:multilib="true">CC="gcc ${BUILD64}" CXX="g++ ${BUILD64}" \
+    ./configure --prefix=/usr --bindir=/bin \
+    --without-bash-malloc --with-installed-readline</c:command>
 
-    <para os="a">Prepare Bash for compilation:</para>
-
-<screen os="b"><userinput>./configure --prefix=/usr --bindir=/bin \
-    --without-bash-malloc --with-installed-readline</userinput></screen>
-
-    <variablelist os="c">
+<!--
+    <variablelist>
       <title>The meaning of the configure option:</title>
 
       <varlistentry>
-        <term><parameter>--with-installed-readline</parameter></term>
+        <term><parameter>-with-installed-readline</parameter></term>
         <listitem>
-          <para>This option tells Bash to use the
+          <c:para>This option tells Bash to use the
           <filename class="libraryfile">readline</filename> library that is
           already installed on the system rather than using its own readline
-          version.</para>
+          version.</c:para>
         </listitem>
       </varlistentry>
     </variablelist>
+-->
+    <c:para>Compile the package:</c:para>
 
-    <para os="d">Compile the package:</para>
+<c:command>make</c:command>
 
-<screen os="e"><userinput>make</userinput></screen>
+    <c:para>To test the results, issue:
+    <c:command>make tests</c:command>.</c:para>
 
-    <para os="f">To test the results, issue:
-    <userinput>make tests</userinput>.</para>
+    <c:para>Install the package:</c:para>
 
-    <para os="g">Install the package:</para>
+<c:command>make htmldir=/usr/share/doc/bash-&bash-version; install</c:command>
 
-<screen os="h"><userinput>make htmldir=/usr/share/doc/bash-&bash-version; install</userinput></screen>
+    <c:para>Run the newly compiled <c:command>bash</c:command> program (replacing
+    the one that is currently being executed):</c:para>
 
-    <para os="i">Run the newly compiled <command>bash</command> program (replacing
-    the one that is currently being executed):</para>
+<c:command c:nodump="true">exec /bin/bash --login +h</c:command>
 
-<screen os="j" role="nodump"><userinput>exec /bin/bash --login +h</userinput></screen>
-
-    <note os="k">
-      <para>The parameters used make the <command>bash</command>
+    <c:note>
+      <c:para>The parameters used make the <c:command>bash</c:command>
       process an interactive login shell and continue to disable hashing so
-      that new programs are found as they become available.</para>
-    </note>
+      that new programs are found as they become available.</c:para>
+    </c:note>
 
-  </sect2>
+  </c:install>
 
-  <sect2 id="contents-bash" role="content">
-    <title>Contents of Bash</title>
+  <c:contents>
 
-    <segmentedlist>
-      <segtitle>Installed programs</segtitle>
-      <segtitle>Installed directory</segtitle>
+    <c:program>
+      <c:name>bash</c:name>
+      <c:description>A widely-used command interpreter; it performs many types
+      of expansions and substitutions on a given command line before executing
+      it, thus making this interpreter a powerful tool</c:description>
+    </c:program>
 
-      <seglistitem>
-        <seg>bash, bashbug, and sh (link to bash)</seg>
-        <seg>/usr/share/doc/bash-&bash-version;</seg>
-      </seglistitem>
-    </segmentedlist>
+    <c:program>
+      <c:name>bashbug</c:name>
+      <c:description>A shell script to help the user compose and mail standard
+      formatted bug reports concerning <c:command>bash</c:command>
+      </c:description>
+    </c:program>
 
-    <variablelist>
-      <bridgehead renderas="sect3">Short Descriptions</bridgehead>
-      <?dbfo list-presentation="list"?>
-      <?dbhtml list-presentation="table"?>
+    <c:program>
+      <c:name>sh</c:name>
+      <c:description>A symlink to the <c:command>bash</c:command> program; when
+      invoked as <c:command>sh</c:command>, <c:command>bash</c:command> tries
+      to mimic the startup behavior of historical versions of
+      <c:command>sh</c:command> as closely as possible, while conforming to the
+      POSIX standard as well</c:description>
+    </c:program>
 
-      <varlistentry id="bash">
-        <term><command>bash</command></term>
-        <listitem>
-          <para>A widely-used command interpreter; it performs many types of
-          expansions and substitutions on a given command line before executing
-          it, thus making this interpreter a powerful tool</para>
-          <indexterm zone="ch-system-bash bash">
-            <primary sortas="b-bash">bash</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
+  </c:contents>
 
-      <varlistentry id="bashbug">
-        <term><command>bashbug</command></term>
-        <listitem>
-          <para>A shell script to help the user compose and mail standard
-          formatted bug reports concerning <command>bash</command></para>
-          <indexterm zone="ch-system-bash bashbug">
-            <primary sortas="b-bashbug">bashbug</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
+</c:package>
 
-      <varlistentry id="sh">
-        <term><command>sh</command></term>
-        <listitem>
-          <para>A symlink to the <command>bash</command> program; when invoked
-          as <command>sh</command>, <command>bash</command> tries to mimic the
-          startup behavior of historical versions of <command>sh</command> as
-          closely as possible, while conforming to the POSIX standard as
-          well</para>
-          <indexterm zone="ch-system-bash sh">
-            <primary sortas="b-sh">sh</primary>
-          </indexterm>
-        </listitem>
-      </varlistentry>
-
-    </variablelist>
-
-  </sect2>
-
-</sect1>
