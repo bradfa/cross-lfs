@@ -4,7 +4,8 @@
   %general-entities;
 ]>
 
-<c:package xmlns:c="http://schema.cross-lfs.org/book" id="ch-system-bash" c:multibuild="false">
+<c:package xmlns:c="http://schema.cross-lfs.org/book"
+           id="ch-system-bash" c:multibuild="false">
 
   <c:title>Bash</c:title>
   <c:version>&bash-version;</c:version>
@@ -12,10 +13,10 @@
 
   <c:install>
 
-    <c:para>The following patch contains updates from the maintainer. The
+    <c:para c:r="p-bu">The following patch contains updates from the maintainer. The
     maintainer of Bash only releases these patches to fix serious issues:</c:para>
 
-<c:command>patch -Np1 -i ../&bash-branch_update-patch;</c:command>
+<c:command c:r="p-bu">patch -Np1 -i ../&bash-branch_update-patch;</c:command>
 
     <c:para c:multilib="true">The following sed points configure towards the
     correct library directory while searching for Readline:</c:para>
