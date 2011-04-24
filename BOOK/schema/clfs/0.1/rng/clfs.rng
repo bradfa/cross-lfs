@@ -210,6 +210,11 @@
       <element name="c:version">
         <text/>
       </element>
+      <optional>
+        <element name="c:variant">
+          <text/>
+        </element>
+      </optional>
       <element name="c:description">
         <ref name="clfs.inline"/>
       </element>

@@ -143,10 +143,16 @@
           </xsl:attribute>
           <xsl:value-of select="c:title" />
         </xsl:element>
-        <xsl:if test="string-length($titlesuffix) > 0">
+        <xsl:if test="(string-length($titlesuffix) + string-length(c:variant)) &gt; 0">
           <xsl:text>
   </xsl:text>
           <xsl:element name="secondary">
+            <xsl:if test="string-length(c:variant) &gt; 0">
+              <xsl:value-of select="c:variant" />
+              <xsl:if test="string-length($titlesuffix) &gt; 0">
+                <xsl:text>, </xsl:text>
+              </xsl:if>
+            </xsl:if>
             <xsl:value-of select="$titlesuffix" />
           </xsl:element>
         </xsl:if>

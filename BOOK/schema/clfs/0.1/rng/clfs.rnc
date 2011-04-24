@@ -126,6 +126,7 @@ clfs.sect.package =
     
     element c:title { text },
     element c:version { text },
+    element c:variant { text }?,
     element c:description { clfs.inline },
     
     element c:install {
