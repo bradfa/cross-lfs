@@ -48,6 +48,15 @@
       </choice>
     </define>
   </include>
+  <!-- Common Attributes -->
+  <define name="xml.attrib.base">
+    <optional>
+      <attribute name="xml:base"/>
+    </optional>
+  </define>
+  <define name="xml.attrib.id">
+    <attribute name="id"/>
+  </define>
   <!-- Extend the standard profiling attributes -->
   <define name="local.effectivity.attrib" combine="interleave">
     <ref name="clfs.attrib.arch"/>
@@ -191,10 +200,8 @@
   <!-- The Package -->
   <define name="clfs.sect.package">
     <element name="c:package">
-      <optional>
-        <attribute name="xml:base"/>
-      </optional>
-      <attribute name="id"/>
+      <ref name="xml.attrib.base"/>
+      <ref name="xml.attrib.id"/>
       <ref name="clfs.attrib.arch"/>
       <ref name="clfs.attrib.bits"/>
       <ref name="clfs.attrib.multilib"/>
@@ -205,17 +212,21 @@
         </choice>
       </attribute>
       <element name="c:title">
+        <ref name="xml.attrib.base"/>
         <text/>
       </element>
       <element name="c:version">
+        <ref name="xml.attrib.base"/>
         <text/>
       </element>
       <optional>
         <element name="c:variant">
+          <ref name="xml.attrib.base"/>
           <text/>
         </element>
       </optional>
       <element name="c:description">
+        <ref name="xml.attrib.base"/>
         <ref name="clfs.inline"/>
       </element>
       <optional>

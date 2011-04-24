@@ -17,6 +17,16 @@ include "../../../docbook/4.5/rng/docbook.rnc" {
     } | clfs.sect.package )
 }
 
+# Common Attributes
+xml.attrib.base = 
+  attribute xml:base {
+    text
+  }?
+xml.attrib.id =
+  attribute id {
+     text
+  }
+
 # Extend the standard profiling attributes
 local.effectivity.attrib &=
   clfs.attrib.arch,
@@ -115,8 +125,8 @@ clfs.package.command =
 # The Package
 clfs.sect.package = 
   element c:package {
-    attribute xml:base { text }?,
-    attribute id { text },
+    xml.attrib.base,
+    xml.attrib.id,
     clfs.attrib.arch,
     clfs.attrib.bits,
     clfs.attrib.multilib,
@@ -124,10 +134,22 @@ clfs.sect.package =
       "true" | "false"
     },
     
-    element c:title { text },
-    element c:version { text },
-    element c:variant { text }?,
-    element c:description { clfs.inline },
+    element c:title {
+      xml.attrib.base,
+      text
+    },
+    element c:version {
+      xml.attrib.base,
+      text
+    },
+    element c:variant {
+      xml.attrib.base,
+      text
+    }?,
+    element c:description {
+      xml.attrib.base,
+      clfs.inline
+    },
     
     element c:install {
       (clfs.package.para |
