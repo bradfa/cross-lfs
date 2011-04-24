@@ -43,7 +43,8 @@ clfs.attrib.r = attribute c:r { text }?
 # Inline Elements
 
 clfs.inline =
-  (clfs.inline.literal |
+  (clfs.inline.emphasis |
+   clfs.inline.literal |
    clfs.inline.replaceable |
    clfs.inline.application |
    clfs.inline.dirname |
@@ -55,6 +56,12 @@ clfs.inline.common.attrib =
   clfs.attrib.arch,
   clfs.attrib.bits,
   clfs.attrib.multilib
+
+clfs.inline.emphasis =
+  element c:emphasis {
+    clfs.inline.common.attrib,
+    clfs.inline
+  }
 
 clfs.inline.literal =
   element c:literal {

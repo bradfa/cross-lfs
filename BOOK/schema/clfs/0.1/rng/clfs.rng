@@ -93,6 +93,7 @@
   <define name="clfs.inline">
     <zeroOrMore>
       <choice>
+        <ref name="clfs.inline.emphasis"/>
         <ref name="clfs.inline.literal"/>
         <ref name="clfs.inline.replaceable"/>
         <ref name="clfs.inline.application"/>
@@ -107,6 +108,12 @@
     <ref name="clfs.attrib.arch"/>
     <ref name="clfs.attrib.bits"/>
     <ref name="clfs.attrib.multilib"/>
+  </define>
+  <define name="clfs.inline.emphasis">
+    <element name="c:emphasis">
+      <ref name="clfs.inline.common.attrib"/>
+      <ref name="clfs.inline"/>
+    </element>
   </define>
   <define name="clfs.inline.literal">
     <element name="c:literal">
