@@ -8,6 +8,7 @@
 <book xmlns:c="http://schema.cross-lfs.org/book">
 
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="prologue/x86_64/bookinfo.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="testpart.xml"/>
   <!--
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="prologue/dedication.xml"/>
   -->

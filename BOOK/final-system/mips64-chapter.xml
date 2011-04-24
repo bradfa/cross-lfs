@@ -77,7 +77,7 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="multilib/zlib-64bit.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="multilib/autoconf.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="multilib/automake.xml"/>
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="common/bash.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="multilib/bash.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="multilib/bzip2.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="multilib/bzip2-n32.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="multilib/bzip2-64bit.xml"/>

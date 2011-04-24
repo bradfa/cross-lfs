@@ -191,9 +191,6 @@
   <!-- The Package -->
   <define name="clfs.sect.package">
     <element name="c:package">
-      <optional>
-        <attribute name="xml:base"/>
-      </optional>
       <attribute name="id"/>
       <ref name="clfs.attrib.arch"/>
       <ref name="clfs.attrib.bits"/>
