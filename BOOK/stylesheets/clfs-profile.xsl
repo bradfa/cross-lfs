@@ -644,7 +644,7 @@
               </xsl:attribute>
             </xsl:if>
             <xsl:element name="screen">
-              <xsl:apply-templates select="@*|node()" mode="filter-bits-32" />
+              <xsl:apply-templates select="node()" mode="filter-bits-32" />
             </xsl:element>
           </xsl:element>
         </xsl:if>
@@ -880,7 +880,7 @@
               </xsl:attribute>
             </xsl:if>
             <xsl:element name="screen">
-              <xsl:apply-templates select="@*|node()" mode="filter-bits-n32" />
+              <xsl:apply-templates select="node()" mode="filter-bits-n32" />
             </xsl:element>
           </xsl:element>
         </xsl:if>
@@ -1116,7 +1116,7 @@
               </xsl:attribute>
             </xsl:if>
             <xsl:element name="screen">
-              <xsl:apply-templates select="@*|node()" mode="filter-bits-64" />
+              <xsl:apply-templates select="node()" mode="filter-bits-64" />
             </xsl:element>
           </xsl:element>
         </xsl:if>
