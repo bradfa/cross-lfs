@@ -637,13 +637,13 @@
     <xsl:if test="(string-length(@c:arch) = 0) or contains(concat(',',@c:arch,','), concat(',', $clfs.arch, ','))">
       <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
         <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',32,')">
-          <xsl:element name="userinput">
+          <xsl:element name="screen">
             <xsl:if test="@c:nodump = 'true'">
               <xsl:attribute name="role">
                 <xsl:text>nodump</xsl:text>
               </xsl:attribute>
             </xsl:if>
-            <xsl:element name="screen">
+            <xsl:element name="userinput">
               <xsl:apply-templates select="node()" mode="filter-bits-32" />
             </xsl:element>
           </xsl:element>
@@ -873,13 +873,13 @@
     <xsl:if test="(string-length(@c:arch) = 0) or contains(concat(',',@c:arch,','), concat(',', $clfs.arch, ','))">
       <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
         <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',n32,')">
-          <xsl:element name="userinput">
+          <xsl:element name="screen">
             <xsl:if test="@c:nodump = 'true'">
               <xsl:attribute name="role">
                 <xsl:text>nodump</xsl:text>
               </xsl:attribute>
             </xsl:if>
-            <xsl:element name="screen">
+            <xsl:element name="userinput">
               <xsl:apply-templates select="node()" mode="filter-bits-n32" />
             </xsl:element>
           </xsl:element>
@@ -1109,13 +1109,13 @@
     <xsl:if test="(string-length(@c:arch) = 0) or contains(concat(',',@c:arch,','), concat(',', $clfs.arch, ','))">
       <xsl:if test="(string-length(@c:multilib) = 0) or contains(concat(',',@c:multilib,','), concat(',', $ismultilib, ','))">
         <xsl:if test="(string-length(@c:bits) = 0) or contains(concat(',',@c:bits,','), ',64,')">
-          <xsl:element name="userinput">
+          <xsl:element name="screen">
             <xsl:if test="@c:nodump = 'true'">
               <xsl:attribute name="role">
                 <xsl:text>nodump</xsl:text>
               </xsl:attribute>
             </xsl:if>
-            <xsl:element name="screen">
+            <xsl:element name="userinput">
               <xsl:apply-templates select="node()" mode="filter-bits-64" />
             </xsl:element>
           </xsl:element>
