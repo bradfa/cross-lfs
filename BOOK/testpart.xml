@@ -20,7 +20,7 @@
         <para>Testing... 1.. 2.. 3..</para>
       </sect1>
 
-<c:package id="ch-system-bash" c:multibuild="false">
+<c:package id="ch-system-bash2" c:multibuild="false">
   <c:title>Bash</c:title>
   <c:version>4.0.1</c:version>
   <c:description>The Bash package contains the Bourne-Again SHell.</c:description>
@@ -62,7 +62,7 @@
   <c:contents>
 
     <c:program>
-      <c:name>test</c:name>
+      <c:name>test2</c:name>
       <c:description>This is the test program.</c:description>
     </c:program>
 
