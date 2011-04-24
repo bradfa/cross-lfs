@@ -234,12 +234,13 @@
           </xsl:attribute>
           <xsl:choose>
             <xsl:when test="string-length(@c:ref) > 0">
+              <!-- Insert an xref to the actual contents list -->
               <xsl:text>
-</xsl:text>
+  </xsl:text>
               <xsl:element name="title" />
               <xsl:text>
 
-</xsl:text>
+  </xsl:text>
             <xsl:element name="para">
               <xsl:text>Details on this package are located in </xsl:text>
               <xsl:element name="xref">
@@ -254,12 +255,13 @@
             </xsl:element>
             </xsl:when>
             <xsl:otherwise>
+              <!-- This page gets the contents list -->
               <xsl:attribute name="id">
                 <xsl:value-of select="$id" />
                 <xsl:text>-contents</xsl:text>
               </xsl:attribute>
               <xsl:text>
-</xsl:text>
+  </xsl:text>
               <xsl:element name="title">
                 <xsl:text>Contents of </xsl:text>
                 <xsl:value-of select="../c:title" />
@@ -267,6 +269,7 @@
               <xsl:text>
 
 </xsl:text>
+              <!-- Begin the Summary List -->
               <xsl:element name="segmentedlist">
                 <xsl:if test="count(c:library) &gt; 0">
                   <xsl:text>
@@ -296,6 +299,7 @@
                   <xsl:if test="count(c:library) &gt; 0">
                     <xsl:text>
     </xsl:text>
+                    <!-- Begin the seg list for Libraries -->
                     <xsl:element name="seg">
                       <xsl:for-each select="c:library">
                         <xsl:value-of select="c:name" />
@@ -315,6 +319,7 @@
                   <xsl:if test="count(c:program) &gt; 0">
                     <xsl:text>
     </xsl:text>
+                    <!-- Begin the seg list for Programs -->
                     <xsl:element name="seg">
                       <xsl:for-each select="c:program">
                         <xsl:value-of select="c:name" />
@@ -334,18 +339,17 @@
                   <xsl:if test="count(c:directory) &gt; 0">
                     <xsl:text>
     </xsl:text>
+                    <!-- Begin the seg list for Directories -->
                     <xsl:element name="seg">
                       <xsl:for-each select="c:directory">
                         <xsl:value-of select="c:name" />
                         <xsl:if test="count(../c:directory) &gt; 1">
-                          <xsl:choose>
-                            <xsl:when test="position() &lt; (last() - 1)">
-                              <xsl:text>, </xsl:text>
-                            </xsl:when>
-                            <xsl:when test="position() = last() - 1">
-                              <xsl:text> and </xsl:text>
-                            </xsl:when>
-                          </xsl:choose>
+                          <xsl:if test="position() &lt; (last() - 1)">
+                            <xsl:text>, </xsl:text>
+                          </xsl:if>
+                          <xsl:if test="position() = last() - 1">
+                            <xsl:text> and </xsl:text>
+                          </xsl:if>
                         </xsl:if>
                       </xsl:for-each>
                     </xsl:element>
@@ -356,10 +360,14 @@
                 <xsl:text>
 </xsl:text>
               </xsl:element>
+              <xsl:text>
+
+</xsl:text>
+              <!-- Insert Short Desc List Here -->
+              <!-- End of the Summary List -->
             </xsl:otherwise>
           </xsl:choose>
           <xsl:text>
-
 </xsl:text>
         </xsl:element>
       </xsl:for-each><!-- c:contents -> sect2 -->
@@ -372,6 +380,8 @@
     </xsl:element><!-- Sect1 -->
 
   </xsl:template><!-- package-stub -->
+
+  <!-- -->
 
   <!-- Apply the profile to the 32bit package -->
   
