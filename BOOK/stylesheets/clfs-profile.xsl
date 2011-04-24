@@ -481,7 +481,64 @@
                   </xsl:element><!-- varlistentry -->
                 </xsl:for-each>
                 <!-- End the Short Desc For-Each for Libraries -->
-
+                
+                <!-- Begin the Short Desc For-Each for Directories -->
+                <xsl:for-each select="c:directory">
+                  <xsl:text>&#xa;&#xa;  </xsl:text>
+                  <xsl:element name="varlistentry">
+                    <xsl:attribute name="id">
+                      <xsl:text>dir</xsl:text>
+                      <xsl:value-of select="translate(c:name, '/', '-')" />
+                    </xsl:attribute>
+                    
+                    <!-- Term -->
+                    <xsl:text>&#xa;    </xsl:text>
+                    <xsl:element name="term">
+                      <xsl:element name="filename">
+                        <xsl:attribute name="class">
+                          <xsl:text>directory</xsl:text>
+                        </xsl:attribute>
+                        <xsl:value-of select="c:name" />
+                      </xsl:element>
+                    </xsl:element>
+                    <!-- End Term -->
+                    
+                    <!-- List Item -->
+                    <xsl:text>&#xa;    </xsl:text>
+                    <xsl:element name="listitem">
+                      
+                      <xsl:text>&#xa;      </xsl:text>
+                      <xsl:element name="para">
+                        <xsl:apply-templates select="c:description/@*|c:description/node()" />
+                      </xsl:element>
+                      
+                      <xsl:text>&#xa;      </xsl:text>
+                      <xsl:element name="indexterm">
+                        <xsl:attribute name="zone">
+                          <xsl:value-of select="$id" />
+                          <xsl:text> dir</xsl:text>
+                          <xsl:value-of select="translate(c:name, '/', '-')" />
+                        </xsl:attribute>
+                        <xsl:text>&#xa;        </xsl:text>
+                        <xsl:element name="primary">
+                          <xsl:attribute name="sortas">
+                            <xsl:text>e-</xsl:text>
+                            <xsl:value-of select="c:name" />
+                          </xsl:attribute>
+                          <xsl:value-of select="c:name" />
+                        </xsl:element>
+                        <xsl:text>&#xa;      </xsl:text>
+                      </xsl:element>
+                      
+                      <xsl:text>&#xa;    </xsl:text>
+                    </xsl:element><!-- listitem -->
+                    <!-- End List Item -->
+                    
+                    <xsl:text>&#xa;  </xsl:text>
+                  </xsl:element><!-- varlistentry -->
+                </xsl:for-each>
+                <!-- End the Short Desc For-Each for Directories -->
+                
                 <xsl:text>&#xa;&#xa;</xsl:text>
               </xsl:element><!-- variablelist -->
               <!-- End Short Desc List -->
