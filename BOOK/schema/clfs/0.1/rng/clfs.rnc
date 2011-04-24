@@ -117,5 +117,36 @@ clfs.sect.package =
       (clfs.block.para |
        clfs.block.command |
        clfs.block.note)+
-    }+
+    }+,
+    
+    element c:contents {
+      attribute c:ref {
+        text
+      } | (
+        element c:library {
+          element c:name {
+            text
+          },
+          element c:description {
+            clfs.inline
+          }
+        }*,
+        element c:program {
+          element c:name {
+            text
+          },
+          element c:description {
+            clfs.inline
+          }
+        }*,
+        element c:directory {
+          element c:name {
+            text
+          },
+          element c:description {
+            clfs.inline
+          }
+        }*
+      )
+    }?
   }

@@ -220,6 +220,150 @@
         </xsl:element>
       </xsl:for-each><!-- c:install -> sect2  -->
 
+      <!-- c:contents -> sect2: Build or reference the contents sect2 -->
+      <xsl:for-each select="c:contents">
+
+        <!-- New Line x2 -->
+        <xsl:text>
+
+</xsl:text>
+
+        <xsl:element name="sect2">
+          <xsl:attribute name="role">
+            <xsl:text>content</xsl:text>
+          </xsl:attribute>
+          <xsl:choose>
+            <xsl:when test="string-length(@c:ref) > 0">
+              <xsl:text>
+</xsl:text>
+              <xsl:element name="title" />
+              <xsl:text>
+
+</xsl:text>
+            <xsl:element name="para">
+              <xsl:text>Details on this package are located in </xsl:text>
+              <xsl:element name="xref">
+                <xsl:attribute name="linkend">
+                  <xsl:value-of select="@c:ref" />
+                  <xsl:text>-contents</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="role">
+                  <xsl:text>.</xsl:text>
+                </xsl:attribute>
+              </xsl:element>
+            </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:attribute name="id">
+                <xsl:value-of select="$id" />
+                <xsl:text>-contents</xsl:text>
+              </xsl:attribute>
+              <xsl:text>
+</xsl:text>
+              <xsl:element name="title">
+                <xsl:text>Contents of </xsl:text>
+                <xsl:value-of select="../c:title" />
+              </xsl:element>
+              <xsl:text>
+
+</xsl:text>
+              <xsl:element name="segmentedlist">
+                <xsl:if test="count(c:library) &gt; 0">
+                  <xsl:text>
+  </xsl:text>
+                  <xsl:element name="segtitle">
+                    <xsl:text>Installed Libraries</xsl:text>
+                  </xsl:element>
+                </xsl:if>
+                <xsl:if test="count(c:program) &gt; 0">
+                  <xsl:text>
+  </xsl:text>
+                  <xsl:element name="segtitle">
+                    <xsl:text>Installed Programs</xsl:text>
+                  </xsl:element>
+                </xsl:if>
+                <xsl:if test="count(c:directory) &gt; 0">
+                  <xsl:text>
+  </xsl:text>
+                  <xsl:element name="segtitle">
+                    <xsl:text>Installed Directories</xsl:text>
+                  </xsl:element>
+                </xsl:if>
+                <xsl:text>
+
+  </xsl:text>
+                <xsl:element name="seglistitem">
+                  <xsl:if test="count(c:library) &gt; 0">
+                    <xsl:text>
+    </xsl:text>
+                    <xsl:element name="seg">
+                      <xsl:for-each select="c:library">
+                        <xsl:value-of select="c:name" />
+                        <xsl:if test="count(../c:library) &gt; 1">
+                          <xsl:choose>
+                            <xsl:when test="position() &lt; (last() - 1)">
+                              <xsl:text>, </xsl:text>
+                            </xsl:when>
+                            <xsl:when test="position() = last() - 1">
+                              <xsl:text> and </xsl:text>
+                            </xsl:when>
+                          </xsl:choose>
+                        </xsl:if>
+                      </xsl:for-each>
+                    </xsl:element>
+                  </xsl:if>
+                  <xsl:if test="count(c:program) &gt; 0">
+                    <xsl:text>
+    </xsl:text>
+                    <xsl:element name="seg">
+                      <xsl:for-each select="c:program">
+                        <xsl:value-of select="c:name" />
+                        <xsl:if test="count(../c:program) &gt; 1">
+                          <xsl:choose>
+                            <xsl:when test="position() &lt; (last() - 1)">
+                              <xsl:text>, </xsl:text>
+                            </xsl:when>
+                            <xsl:when test="position() = last() - 1">
+                              <xsl:text> and </xsl:text>
+                            </xsl:when>
+                          </xsl:choose>
+                        </xsl:if>
+                      </xsl:for-each>
+                    </xsl:element>
+                  </xsl:if>
+                  <xsl:if test="count(c:directory) &gt; 0">
+                    <xsl:text>
+    </xsl:text>
+                    <xsl:element name="seg">
+                      <xsl:for-each select="c:directory">
+                        <xsl:value-of select="c:name" />
+                        <xsl:if test="count(../c:directory) &gt; 1">
+                          <xsl:choose>
+                            <xsl:when test="position() &lt; (last() - 1)">
+                              <xsl:text>, </xsl:text>
+                            </xsl:when>
+                            <xsl:when test="position() = last() - 1">
+                              <xsl:text> and </xsl:text>
+                            </xsl:when>
+                          </xsl:choose>
+                        </xsl:if>
+                      </xsl:for-each>
+                    </xsl:element>
+                  </xsl:if>
+                  <xsl:text>
+  </xsl:text>
+                </xsl:element>
+                <xsl:text>
+</xsl:text>
+              </xsl:element>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text>
+
+</xsl:text>
+        </xsl:element>
+      </xsl:for-each><!-- c:contents -> sect2 -->
+
       <!-- New Line x2 -->
       <xsl:text>
 

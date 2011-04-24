@@ -44,7 +44,6 @@
     <c:command>make tests</c:command>.</c:para>
 
     <c:para>Install the package:</c:para>
-
 <c:command>make htmldir=/usr/share/doc/bash-&bash-version; install</c:command>
 
     <c:para>Run the newly compiled <c:command>bash</c:command> program (replacing
@@ -59,6 +58,26 @@
     </c:note>
 
   </c:install>
+
+  <c:contents>
+
+<c:directory>
+  <c:name>/usr/blah</c:name>
+  <c:description>Some Crap</c:description>
+</c:directory>
+<c:directory>
+  <c:name>/usr/blah2</c:name>
+  <c:description>Some Crap2</c:description>
+</c:directory>
+<c:directory>
+  <c:name>/usr/blah3</c:name>
+  <c:description>Some Crap2</c:description>
+</c:directory>
+<c:directory>
+  <c:name>/usr/blah4</c:name>
+  <c:description>Some Crap2</c:description>
+</c:directory>
+  </c:contents>
 
 </c:package>
 
@@ -88,6 +107,8 @@
 <c:command>make install</c:command>
 
   </c:install>
+
+  <c:contents c:ref="ch-system-bash" />
 
 </c:package>
 
