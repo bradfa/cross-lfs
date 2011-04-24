@@ -373,6 +373,59 @@
                   <xsl:text>list-presentation="table"</xsl:text>
                 </xsl:processing-instruction>
                 
+                <!-- Begin the Short Desc For-Each for Programs -->
+                <xsl:for-each select="c:program">
+                  <xsl:text>&#xa;&#xa;  </xsl:text>
+                  <xsl:element name="varlistentry">
+                    <xsl:attribute name="id">
+                      <xsl:value-of select="c:name" />
+                    </xsl:attribute>
+                    
+                    <!-- Term -->
+                    <xsl:text>&#xa;    </xsl:text>
+                    <xsl:element name="term">
+                      <xsl:element name="command">
+                        <xsl:value-of select="c:name" />
+                      </xsl:element>
+                    </xsl:element>
+                    <!-- End Term -->
+                    
+                    <!-- List Item -->
+                    <xsl:text>&#xa;    </xsl:text>
+                    <xsl:element name="listitem">
+                      
+                      <xsl:text>&#xa;      </xsl:text>
+                      <xsl:element name="para">
+                        <xsl:apply-templates select="c:description" />
+                      </xsl:element>
+                      
+                      <xsl:text>&#xa;      </xsl:text>
+                      <xsl:element name="indexterm">
+                        <xsl:attribute name="zone">
+                          <xsl:value-of select="$id" />
+                          <xsl:text> </xsl:text>
+                          <xsl:value-of select="c:name" />
+                        </xsl:attribute>
+                        <xsl:text>&#xa;        </xsl:text>
+                        <xsl:element name="primary">
+                          <xsl:attribute name="sortas">
+                            <xsl:text>b-</xsl:text>
+                            <xsl:value-of select="c:name" />
+                          </xsl:attribute>
+                          <xsl:value-of select="c:name" />
+                        </xsl:element>
+                        <xsl:text>&#xa;      </xsl:text>
+                      </xsl:element>
+                      
+                      <xsl:text>&#xa;    </xsl:text>
+                    </xsl:element><!-- listitem -->
+                    <!-- End List Item -->
+                    
+                    <xsl:text>&#xa;  </xsl:text>
+                  </xsl:element><!-- varlistentry -->
+                </xsl:for-each>
+                <!-- End the Short Desc For-Each for Programs -->
+                
                 <!-- Begin the Short Desc For-Each for Libraries -->
                 <xsl:for-each select="c:library">
                   <xsl:text>&#xa;&#xa;  </xsl:text>
@@ -388,6 +441,7 @@
                         <xsl:attribute name="class">
                           <xsl:text>libraryfile</xsl:text>
                         </xsl:attribute>
+                        <xsl:value-of select="c:name" />
                       </xsl:element>
                     </xsl:element>
                     <!-- End Term -->
