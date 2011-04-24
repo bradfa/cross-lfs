@@ -213,7 +213,7 @@
       <element name="c:description">
         <ref name="clfs.inline"/>
       </element>
-      <oneOrMore>
+      <optional>
         <element name="c:install">
           <oneOrMore>
             <choice>
@@ -224,7 +224,7 @@
             </choice>
           </oneOrMore>
         </element>
-      </oneOrMore>
+      </optional>
       <optional>
         <element name="c:contents">
           <choice>

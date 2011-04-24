@@ -133,7 +133,7 @@ clfs.sect.package =
        clfs.package.command |
        clfs.package.note |
        clfs.package.warning)+
-    }+,
+    }?,
     
     element c:contents {
       attribute c:ref {
